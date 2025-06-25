@@ -49,7 +49,8 @@ async function enableDailyMode() {
 }
 
 function backspace(){
-    liveInput--;
+    liveInput = liveInput.slice(0, -1);
+    updateBoxes(); // No pulse when removing letters
 }
 
 function allow_fake() {
