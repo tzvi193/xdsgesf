@@ -237,7 +237,7 @@ function yes() {
 }
 
 function no(){
-    document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">Restart</button>'
+    document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">New word</button>'
 }
 
 function updateBoxes() {
