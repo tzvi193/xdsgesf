@@ -608,20 +608,7 @@ h1 {
 }
 
 /* Settings Elements */
-#close_settings {
-    display: block;
-    height: 30px;
-    width: 110px;
-    background-color: var(--primary-color);
-    border: 0px;
-    border-radius: 5px;
-    color: var(--text-color);
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    text-shadow: 0 0 2px black;
-    transition: all 0.2s;
-    margin-top: 40px;
-}
+
 
 #close_settings:hover {
     background-color: var(--primary-hover);
