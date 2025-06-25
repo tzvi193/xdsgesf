@@ -25,7 +25,7 @@ async function enableDailyMode() {
     
     try {
         // Use a relative path if serving from the same origin
-        const response = await fetch('/word');
+        const response = await fetch('https://wordle-server-2piu.onrender.com/word');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
