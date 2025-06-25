@@ -48,6 +48,10 @@ async function enableDailyMode() {
     }
 }
 
+function backspace(){
+    liveInput--;
+}
+
 function allow_fake() {
     const checkbox = document.getElementById("allow_fake_words");
     allowFakeWords = checkbox.checked;
