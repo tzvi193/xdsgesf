@@ -220,7 +220,6 @@ body {
 }
 
 #settings_box h2 {
-    text-align: center;
     margin-top: 10px;
     margin-bottom: 30px;
     font-size: 24px;
@@ -605,14 +604,6 @@ h1 {
 
 #not_in_list.shake, #not_enough_letters.shake {
     animation: shake 0.5s;
-}
-
-/* Settings Elements */
-
-
-#close_settings:hover {
-    background-color: var(--primary-hover);
-    transition: all 0.2s;
 }
 
 #settings_title {
