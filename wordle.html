@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<head>
+    <title>Wordle</title>
+    <link rel="stylesheet" href="wordle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="Untitled (1)-modified.ico">
+    <script src="word_list.js"></script>
+    <script src="wordle.js"></script>
+</head>
+<body>
+    <div id="top_bar">
+        <div onclick="settings()" id="settings" class="top_bar_buttons">
+            <div id="settings_imgDIV">
+                <img id="settings_img" src="output-onlinepngtools (1).png">
+            </div>
+            <div class="settings-content">
+                <p id="settings_title">Settings</p>
+                <div id="hint_settings">
+                    <div class="settings_labels" id="max_hints">Max hints: </div>
+                    <div onclick="up_hints()" class="hint_amount" id="up_hints">⮝</div>
+                    <div id="number_hint" class="hint_amount">3</div>
+                    <div onclick="down_hints()" class="hint_amount" id="down_hints">⮟</div>
+                </div>
+                <div id="allow_fake_DIV">
+                    <div class="settings_labels">Allow fake words:</div>
+                    <input onclick="allow_fake()" id="allow_fake_words" type="checkbox">
+                </div>
+                <div id="theme" class="settings_labels">
+                    Theme:
+                    <div id="dark" class="theme-option" data-theme="dark">dark</div>
+                    <div id="light" class="theme-option" data-theme="light">light</div>
+                    <div id="default" class="theme-option" data-theme="default">default</div>
+                </div>
+                <!-- Add more options here later -->
+                <button onclick="close_settings(event)" id="close_settings">Close</button>
+            </div>
+        </div>
+        <div class="top_bar_buttons" id="stats" onclick="toggleStats()">
+            <img id="stats_icon" src="output-onlinepngtools (2).png">
+        </div>
+        <h1>Wordle</h1>
+        <!-- <div id="timer">00:00</div> make stopwatch later-->
+        <button  onclick="hint()" id="Hints" class="top_bar_buttons"><img id="light_bulb" src="output-onlinepngtools.png"></button>
+        <button onclick="how_to()" id="how_to_play" class="top_bar_buttons">?</button>
+    </div>
+  
+    <div id="top_parent">
+            <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+            <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily Mode</button>
+        <div id="restartDIV">
+            <button class="top_buttons" onclick="restart()">New word</button>
+        </div>
+        
+    </div>
+    <div id="grid_parent">
+        <div class="grid">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <div class="grid">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <div class="grid">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <div class="grid">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <div class="grid">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+        <div class="grid">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </div>
+    <div id="keyboard">
+        <div id="row1">
+            <div class="keys"><p>Q</p></div>
+            <div class="keys"><p>W</p></div>
+            <div class="keys"><p>E</p></div>
+            <div class="keys"><p>R</p></div>
+            <div class="keys"><p>T</p></div>
+            <div class="keys"><p>Y</p></div>
+            <div class="keys"><p>U</p></div>
+            <div class="keys"><p>I</p></div>
+            <div class="keys"><p>O</p></div>
+            <div class="keys"><p>P</p></div>
+        </div>
+        <div id="row2">
+            <div class="keys"><p>A</p></div>
+            <div class="keys"><p>S</p></div>
+            <div class="keys"><p>D</p></div>
+            <div class="keys"><p>F</p></div>
+            <div class="keys"><p>G</p></div>
+            <div class="keys"><p>H</p></div>
+            <div class="keys"><p>J</p></div>
+            <div class="keys"><p>K</p></div>
+            <div class="keys"><p>L</p></div>
+            <button class ="keys" class="keyboard_buttons" id="backspace" onclick="backspace()">←</button>
+        </div>
+        <div id="row3">
+            <div class="keys"><p>Z</p></div>
+            <div class="keys"><p>X</p></div>
+            <div class="keys"><p>C</p></div>
+            <div class="keys"><p>V</p></div>
+            <div class="keys"><p>B</p></div>
+            <div class="keys"><p>N</p></div>
+            <div class="keys"><p>M</p></div>
+            <button id="submit_button" onclick="handle_input()">submit</button>
+        </div>
+    </div>
+    <div id="win_box_parent">
+        <div id="overlay"></div>
+        <div id="win_box">You Win!<button id="final_restart" onclick="yes()">New word</button></div>
+    </div>
+    <div id="lose_box_parent">
+        <div id="overlay_lose"></div>
+        <div id="lose_box">
+            <div>Game over</div>
+            <div id="word_reveal"></div>
+            <button id="lose_restart" onclick="yes()">New word</button>
+        </div>
+    </div>
+    <div id="not_in_list_parent">
+        <div id="not_in_list">Not in dictionary</div>
+    </div>
+    <div id="not_enough_letters_parent">
+        <div id="not_enough_letters">Not enough letters</div>
+    </div>
+
+    <div id="overlay_help"></div>
+    <div id="how_to_play_box">
+        <div id="close_help" onclick="how_to()">×</div>
+        <p class="help_text">
+            Guess the word in 6 tries.<br><br>
+            After each guess, the colour 
+            of the tiles will change to show how <br>
+            close your guess was to to the word.
+        </p>
+        <div class="help_grid">
+            <div id="correct_example" class="box_help">T</div>
+            <div class="box_help">A</div>
+            <div class="box_help">B</div>
+            <div class="box_help">L</div>
+            <div class="box_help">E</div>
+        </div>
+        <p class="help_text">
+            The letter <b>T</b> is in the word and in the correct spot.
+        </p>
+         <div class="help_grid">
+            <div class="box_help">P</div>
+            <div class="box_help">A</div>
+            <div id="in_word_example" class="box_help">Y</div>
+            <div class="box_help">E</div>
+            <div class="box_help">R</div>
+        </div>
+        <p class="help_text">
+            The letter <b>Y</b> is in the word but in the wrong spot.
+        </p>
+         <div class="help_grid">
+            <div class="box_help">O</div>
+            <div class="box_help">T</div>
+            <div class="box_help">H</div>
+            <div class="box_help">E</div>
+            <div id="wrong_example" class="box_help">R</div>
+        </div>
+        <p>
+            The letter <b>R</b> is not in the word in any spot.
+        </p>
+    </div>
+    <div id="stats_overlay"></div>
+<div id="stats_box">
+    <div id="close_stats" onclick="toggleStats()">×</div>
+    <h2>Statistics</h2>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number" id="games-played">0</div>
+            <div class="stat-label">Played</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="win-rate">0</div>
+            <div class="stat-label">Win %</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="current-streak">0</div>
+            <div class="stat-label">Current Streak</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="best-streak">0</div>
+            <div class="stat-label">Best Streak</div>
+        </div>
+    </div>
+    <div class="guess-distribution">
+        <h3 id="h3">Guess Amount</h3>
+        <div class="distribution-bars">
+            <div class="bar-row"><span>1</span><div class="bar" id="bar-1"></div><span id="count-1">0</span></div>
+            <div class="bar-row"><span>2</span><div class="bar" id="bar-2"></div><span id="count-2">0</span></div>
+            <div class="bar-row"><span>3</span><div class="bar" id="bar-3"></div><span id="count-3">0</span></div>
+            <div class="bar-row"><span>4</span><div class="bar" id="bar-4"></div><span id="count-4">0</span></div>
+            <div class="bar-row"><span>5</span><div class="bar" id="bar-5"></div><span id="count-5">0</span></div>
+            <div class="bar-row"><span>6</span><div class="bar" id="bar-6"></div><span id="count-6">0</span></div>
+            <div class="bar-row"><span id="failed">×</span><div class="bar" id="bar-7"></div><span id="count-7">0</span></div>
+        </div>
+        <div id="resetStatsDIV" style="margin-top: 30px; text-align: center;">
+            <button class="stats_button" onclick="resetStats()">Reset Statistics</button>
+        </div>
+    </div>
+</div>
+</body>
