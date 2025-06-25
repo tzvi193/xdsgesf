@@ -1143,7 +1143,7 @@ h1 {
     
     /* Modal and Popup adjustments */
     #win_box, #lose_box {
-        width: 80vw;
+        width: 50vw;
         padding: 30px;
     }
 
