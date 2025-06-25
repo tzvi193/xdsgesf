@@ -1020,7 +1020,7 @@ h1 {
 
     .top_bar_buttons {
         padding: 5px;
-        top: 5px; /* Adjust positioning */
+        top: 2px; /* Adjust positioning */
     }
 
     #settings, #stats, #Hints, #how_to_play {
