@@ -167,35 +167,83 @@ body {
     width: 50px;
     height: 50px;
     display: flex;
-    flex-direction: column;
-    justify-content: start;
+    align-items: center;
+    justify-content: center;
     transition: all 0.5s;
-    overflow: hidden;
     box-sizing: border-box;
     z-index: 9999;
 }
 
-#settings.expanded {
-    height: 700px;
-    width: 300px;
-    background-color: var(--settings-bg);
-    box-shadow: var(--settings-shadow);
-    border: var(--settings-border);
-    cursor: default;
-}
-
-.settings-content {
+/* ADD THIS NEW CSS */
+#settings_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
-    transition: opacity 0.4s ease;
-    font-size: 14px;
-    margin-top: 5px;
-    color: var(--box-text-color);
-    overflow: hidden;
-    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    z-index: 9999;
+    pointer-events: none;
 }
 
-#settings.expanded .settings-content {
+#settings_overlay.active {
     opacity: 1;
+    pointer-events: all;
+}
+
+#settings_box {
+    position: absolute;
+    width: 500px;
+    height: auto;
+    max-width: calc(100vw - 60px);
+    background-color: var(--bg-color);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border: 1px #538d4e solid;
+    border-radius: var(--button-border-radius);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--box-text-color);
+    z-index: 99999;
+}
+
+#settings_box.showing {
+    opacity: 1;
+    pointer-events: all;
+    animation: bounceIn 0.3s ease-out forwards;
+}
+
+#settings_box h2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#close_settings {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--box-text-color);
+    transition: all 0.2s;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#close_settings:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
 }
 
 #Hints {

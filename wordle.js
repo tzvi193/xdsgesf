@@ -188,17 +188,13 @@ function hint() {
     }, 1500);
 }
 
-function settings() {
-    const settingsDiv = document.getElementById("settings");
-    settingsDiv.classList.add("expanded");
-    document.getElementById("settings_imgDIV").innerHTML = '<img id="settings_img" src="output-onlinepngtools (1)flipped.png"></img>';
-}
 
-function close_settings(event) {
-    event.stopPropagation(); 
-    const settingsDiv = document.getElementById("settings");
-    settingsDiv.classList.remove("expanded");
-    document.getElementById("settings_imgDIV").innerHTML = '<img id="settings_img" src="output-onlinepngtools (1).png"></img>';
+function toggleSettings() {
+    const settingsBox = document.getElementById("settings_box");
+    const overlay = document.getElementById("settings_overlay");
+    
+    settingsBox.classList.toggle("showing");
+    overlay.classList.toggle("active");
 }
 
 function restart() {
