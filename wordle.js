@@ -24,7 +24,11 @@ async function enableDailyMode() {
     document.getElementById('reveal_word').disabled = true;
     
     try {
-        const response = await fetch('https://wordle-server-2piu.onrender.com/word');
+        // Use a relative path if serving from the same origin
+        const response = await fetch('/word');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
         const data = await response.json();
         word_to_guess = data.word.toLowerCase();
         currentRow = 0;
@@ -36,7 +40,7 @@ async function enableDailyMode() {
         resetKeyboard();
     } catch (error) {
         console.error('Error fetching daily word:', error);
-        alert('Could not fetch daily word. Using random word instead.' + error);
+        alert('Could not fetch daily word. Using random word instead.');
         dailyMode = false;
         document.getElementById('daily_mode').classList.remove('active');
         document.getElementById('reveal_word').disabled = false;
