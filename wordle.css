@@ -1051,6 +1051,15 @@ h1 {
         margin-bottom: 5px;
         margin-top: 5px;
     }
+    #restart_yes, #restart_no {
+        flex: 1;              /* Make them grow to fill the container space */
+        width: auto;          /* Override desktop fixed width */
+        height: auto;         /* Let padding control the height */
+        padding: 10px 5px;    /* Match the height of other top buttons */
+        margin: 0 3px;        /* Match the margin of other top buttons */
+        font-size: 13px;      /* Match font size of other top buttons */
+        white-space: nowrap;  /* Prevent text from wrapping on small screens */
+    }
 
     .top_buttons, #daily_mode {
         width: auto; /* Let flexbox decide the width */
