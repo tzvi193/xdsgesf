@@ -1055,7 +1055,7 @@ h1 {
     .top_buttons, #daily_mode {
         width: auto; /* Let flexbox decide the width */
         flex: 1; /* Make buttons share space equally */
-        margin: 0 3px; /* Add small margin between buttons */
+        margin: 10px 3px; /* Add small margin between buttons */
         padding: 10px 5px;
         font-size: 13px;
         white-space: nowrap; /* Prevent text from wrapping */
