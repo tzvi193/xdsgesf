@@ -48,9 +48,16 @@ async function enableDailyMode() {
     }
 }
 
-function backspace(){
+function backspace() {
+    // Prevent action if the game has ended
+    if (gameOver) return;
+
+    // Remove the last character from the liveInput string
     liveInput = liveInput.slice(0, -1);
-    updateBoxes(); // No pulse when removing letters
+
+    // Update the grid to reflect the change.
+    // The updateBoxes() function already handles everything visually.
+    updateBoxes();
 }
 
 function allow_fake() {
