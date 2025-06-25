@@ -346,6 +346,24 @@ h1 {
     margin-bottom: 8px;
 }
 
+/* Add this new rule below it */
+@media screen and (max-width: 768px) {
+    #keyboard {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 5px 3px;
+        margin-bottom: 0;
+        background-color: var(--bg-color);
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    }
+    
+    body {
+        padding-bottom: 180px; /* This gives space for the fixed keyboard */
+    }
+}
+
 #row1, #row2, #row3 {
     padding: 0px;
     display: flex;
@@ -771,9 +789,6 @@ h1 {
     font-weight: bold;
 }
 
-#spacer {
-    flex-grow: 1; /* This makes the div expand to fill empty space */
-}
 
 #close_help:hover {
     color: var(--primary-color);
