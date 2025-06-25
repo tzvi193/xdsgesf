@@ -44,7 +44,7 @@ async function enableDailyMode() {
         dailyMode = false;
         document.getElementById('daily_mode').classList.remove('active');
         document.getElementById('reveal_word').disabled = false;
-        location.reload();
+        restart();
     }
 }
 
@@ -237,7 +237,7 @@ function yes() {
 }
 
 function no(){
-    document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">New word</button>'
+    document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">Restart</button>'
 }
 
 function updateBoxes() {
@@ -465,6 +465,33 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+function setupKeyboardLayout() {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const row2 = document.getElementById('row2');
+    const row3 = document.getElementById('row3');
+    const backspaceBtn = document.getElementById('backspace');
+    const submitBtn = document.getElementById('submit_button');
+
+    function handleLayoutChange(mq) {
+        if (mq.matches) {
+            // Mobile layout: Move submit to start of row3, backspace to end of row3
+            row3.prepend(submitBtn);
+            row3.appendChild(backspaceBtn);
+        } else {
+            // Desktop layout: Move buttons back to original positions
+            row2.appendChild(backspaceBtn);
+            row3.appendChild(submitBtn);
+        }
+    }
+
+    // Initial check
+    handleLayoutChange(mediaQuery);
+
+    // Listen for changes
+    mediaQuery.addEventListener('change', handleLayoutChange);
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("hint_amount") !== null) {
         hint_amount = parseInt(localStorage.getItem("hint_amount"));
@@ -496,6 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateActiveThemeIndicator(savedTheme);
     loadStats();
+    setupKeyboardLayout(); // Set up the dynamic keyboard
 });
 
 function setupThemeSwitcher() {
@@ -509,4 +537,3 @@ function setupThemeSwitcher() {
         });
     });
 }
-

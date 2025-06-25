@@ -121,6 +121,7 @@ body {
     display: flex;
     flex-direction: column;
     user-select: none;
+    -webkit-tap-highlight-color: transparent; /* Disable tap highlight on mobile */
 }
 
 #top_bar {
@@ -299,7 +300,7 @@ h1 {
     display: flex;
     color: var(--box-text-color);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
+    font-size: 25px; /* INCREASED FONT SIZE */
     font-weight: bold;
     text-transform: capitalize;
     justify-content: center;
@@ -358,15 +359,21 @@ h1 {
     font-weight: bold;
     color: var(--key-text-color);
     text-shadow: var(--key-text-shadow);
-    display: inline;
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     height: 49px;
     width: 41px;
     margin-right: 3px;
     margin-left: 3px;
     background-color: var(--key-bg);
     box-shadow: var(--key-shadow);
-    text-align: center;
     transition: all 0.5s;
+    cursor: pointer;
+}
+
+.keys p {
+    margin: 0; /* Remove default paragraph margin */
 }
 
 .keys:hover {
@@ -388,6 +395,11 @@ h1 {
     box-shadow: var(--key-shadow);
     transition: all 0.5s;
     text-shadow: 0 0 4px black;
+    cursor: pointer;
+    /* This button is also a flex container for centering */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #submit_button {
@@ -403,6 +415,7 @@ h1 {
     font-size: large;
     box-shadow: var(--key-shadow);
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 #submit_button:hover, #backspace:hover {
@@ -716,7 +729,7 @@ h1 {
 #how_to_play_box{
     position: absolute;
     width: 600px;
-    height: 400px;
+    height: auto;
     max-width: calc(100vw - 60px); /* Account for 20px padding on each side + 10px margin on each side */
     background-color: var(--bg-color);
     transform: translate(-50%, -50%);
@@ -802,7 +815,7 @@ h1 {
 #stats_box {
     position: absolute;
     width: 500px;
-    height: 500px;
+    height: auto;
     max-width: calc(100vw - 60px);
     background-color: var(--bg-color);
     transform: translate(-50%, -50%);
@@ -980,3 +993,208 @@ h1 {
 #daily_mode.active {
     background-color: var(--secondary-hover);
 }
+
+
+/* --- START OF RESPONSIVE DESIGN --- */
+
+@media screen and (max-width: 768px) {
+    body {
+        /* Ensure the layout uses the full height on mobile, especially with URL bars */
+        min-height: -webkit-fill-available;
+        min-height: 100vh;
+    }
+
+    /* Top Bar adjustments */
+    #top_bar {
+        height: 60px; /* Reduce top bar height */
+    }
+
+    h1 {
+        font-size: 36px; /* Smaller title */
+    }
+
+    .top_bar_buttons {
+        padding: 5px;
+        top: 10px; /* Adjust positioning */
+    }
+
+    #settings, #stats, #Hints, #how_to_play {
+        width: 40px; /* Smaller icons */
+        height: 40px;
+    }
+    
+    #light_bulb, #settings_img, #stats_icon {
+        width: 24px; /* Smaller icon images */
+    }
+    
+    #settings { left: 10px; }
+    #stats { left: 60px; }
+    #how_to_play { right: 10px; }
+    #Hints { right: 60px; }
+    
+    #Hints.expanded {
+        width: 150px; /* Slightly smaller expanded hint */
+    }
+    
+    /* Control buttons adjustments */
+    #top_parent {
+        flex-direction: row; /* Keep buttons horizontal */
+        height: auto;
+        padding: 0 10px; /* Add padding to prevent touching edges */
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    .top_buttons, #daily_mode {
+        width: auto; /* Let flexbox decide the width */
+        flex: 1; /* Make buttons share space equally */
+        margin: 0 3px; /* Add small margin between buttons */
+        padding: 10px 5px;
+        font-size: 13px;
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+    
+    .top_buttons:hover, #daily_mode:hover {
+        font-size: 13px; /* Disable hover growth to prevent layout shifts */
+        width: auto; /* Keep width consistent */
+    }
+    #restartDIV {
+        flex: 1;
+        display: flex;
+    }
+
+    /* Grid adjustments */
+    #grid_parent {
+        margin-top: 0;
+    }
+    
+    .box {
+        width: 16vw; /* Flexible width */
+        height: 16vw; /* Flexible height */
+        max-width: 70px; /* Don't grow too large */
+        max-height: 70px;
+        margin: 2px; /* Smaller margins */
+        font-size: 28px; /* INCREASED FONT SIZE for mobile */
+    }
+
+    /* Keyboard adjustments */
+    #keyboard {
+        width: 100%; /* Full width */
+        padding: 5px 3px;
+        box-sizing: border-box;
+        height: auto; /* Auto height */
+        margin-bottom: 5px;
+    }
+
+    #row1, #row2, #row3 {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+        height: auto;
+    }
+    
+    #row2 {
+        /* Add a bit of margin to simulate the wider keys of the other rows */
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .keys, #backspace, #submit_button {
+        flex-grow: 1;
+        height: 50px;
+        margin: 0 1.5px;
+        font-size: 14px;
+        padding: 0;
+        min-width: 0;
+        width: auto; /* Override fixed width */
+        background-color: var(--key-bg); /* Ensure all keys have a consistent base style */
+    }
+
+    #submit_button, #backspace {
+        flex-grow: 1.5; /* Make these buttons wider than letter keys */
+        font-size: 14px; /* Standardize font size on mobile */
+        text-transform: uppercase;
+    }
+    
+    #backspace {
+        font-size: 24px;
+    }
+    
+    /* Modal and Popup adjustments */
+    #win_box, #lose_box {
+        width: 80vw;
+        padding: 30px;
+    }
+
+    #how_to_play_box, #stats_box {
+        width: 90vw;
+        max-width: 500px;
+        height: auto;
+        max-height: 85vh;
+        overflow-y: auto; /* Enable scrolling for tall content */
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    #settings.expanded {
+        width: 85vw;
+        max-width: 300px;
+        height: auto;
+        max-height: 80vh;
+        overflow-y: auto;
+        left: 5px;
+        top: 5px;
+    }
+
+    .box_help {
+        width: 12vw;
+        height: 12vw;
+        max-width: 45px;
+        max-height: 45px;
+        font-size: 20px;
+    }
+
+    .help_text, .help_text b, p, h2, h3 {
+         font-size: 14px; /* Standardize text size in modals */
+    }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+
+    .stat-number { font-size: 28px; }
+    .stat-label { font-size: 10px; }
+    .stats-grid { gap: 10px; }
+
+    /* Notification adjustments */
+    #not_in_list_parent, #not_enough_letters_parent {
+        top: 80px; /* Position below the smaller top bar */
+    }
+}
+
+@media screen and (max-width: 380px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    .keys, #backspace, #submit_button {
+        height: 45px;
+        font-size: 12px;
+    }
+    
+    #backspace {
+        font-size: 20px;
+    }
+
+    #submit_button {
+        font-size: 12px;
+    }
+
+    .box {
+        font-size: 24px;
+    }
+
+    .top_buttons, #daily_mode {
+        font-size: 11px;
+    }
+}
+/* --- END OF RESPONSIVE DESIGN --- */
