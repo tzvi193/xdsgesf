@@ -1087,7 +1087,7 @@ h1 {
         height: 16vw; /* Flexible height */
         max-width: 70px; /* Don't grow too large */
         max-height: 70px;
-        margin: 2px; /* Smaller margins */
+        margin: 4px; /* Smaller margins */
         font-size: 28px; /* INCREASED FONT SIZE for mobile */
     }
 
