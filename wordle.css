@@ -117,11 +117,12 @@
 body {
     background-color: var(--bg-color);
     margin: 0px;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     user-select: none;
     -webkit-tap-highlight-color: transparent; /* Disable tap highlight on mobile */
+    min-height: 100vh; /* Fallback for older browsers */
+    min-height: 100dvh; /* Modern, dynamic height for mobile */
 }
 
 #top_bar {
@@ -336,7 +337,6 @@ h1 {
 }
 
 #keyboard {
-    margin-top: auto;
     width: 480px;
     height: 166px;
     padding-top: 20px;
@@ -1065,9 +1065,6 @@ h1 {
     }
 
     /* Grid adjustments */
-    #grid_parent {
-        margin-top: 0;
-    }
     
     .box {
         width: 16vw; /* Flexible width */
@@ -1198,3 +1195,6 @@ h1 {
     }
 }
 /* --- END OF RESPONSIVE DESIGN --- */
+#spacer {
+    flex-grow: 1; /* This makes the div expand to fill empty space */
+}
