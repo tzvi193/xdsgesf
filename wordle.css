@@ -1122,13 +1122,17 @@ h1 {
         min-height: 0; /* Flexbox fix for overflow */
     }
     
+    /* --- REPLACE WITH THIS BLOCK --- */
+
     .box {
-        width: 14vw; /* Flexible width */
-        height: 16vw; /* Flexible height */
-        max-width: 70px; /* Don't grow too large */
-        max-height: 70px;
-        margin: 4px; /* Smaller margins */
-        font-size: 28px; /* INCREASED FONT SIZE for mobile */
+        /* Use clamp with min() to ensure boxes scale with the SHORTEST screen dimension */
+        width:  clamp(38px, min(14vw, 14vh), 70px);
+        height: clamp(42px, min(16vw, 16vh), 70px);
+
+        margin: 2px; /* Smaller margins */
+        
+        /* Also scale font size with the shortest dimension */
+        font-size: clamp(20px, min(5.5vw, 5.5vh), 28px);
     }
 
     /* Keyboard adjustments */
