@@ -1112,27 +1112,36 @@ h1 {
 
     /* Grid adjustments */
     /* ADDED: Make grid container fill available space */
+    /* --- REPLACE WITH THIS --- */
     #grid_parent {
-        flex-grow: 1; /* Key change: allow grid to fill space */
-        margin-top: 0; /* Override desktop margin */
-        margin-bottom: 0;
+        flex-grow: 1;           /* Let it fill the available vertical space */
         display: flex;
         flex-direction: column;
-        justify-content: center; /* Center the rows vertically */
-        min-height: 0; /* Flexbox fix for overflow */
+        justify-content: center;
+        min-height: 0;          /* Crucial flexbox fix to allow shrinking */
+        padding: 5px 0;         /* Add a little vertical space */
+        box-sizing: border-box;
+        margin: 0;              /* Remove any desktop margins */
     }
     
-    /* --- REPLACE WITH THIS BLOCK --- */
+    .grid {
+        flex-grow: 1;            /* Make all 6 rows share the parent's height equally */
+        display: flex;
+        justify-content: center;
+        align-items: center;     /* Vertically center the boxes within the row */
+        min-height: 0;           /* Allow the row itself to shrink */
+    }
 
+    /* --- REPLACE WITH THIS --- */
     .box {
-        /* Use clamp with min() to ensure boxes scale with the SHORTEST screen dimension */
-        width:  clamp(38px, min(14vw, 14vh), 70px);
-        height: clamp(42px, min(16vw, 16vh), 70px);
-
-        margin: 2px; /* Smaller margins */
+        aspect-ratio: 1 / 1;      /* This is key: keeps the box a perfect square */
+        height: 95%;              /* Set height based on the parent row's available height */
         
-        /* Also scale font size with the shortest dimension */
-        font-size: clamp(20px, min(5.5vw, 5.5vh), 28px);
+        /* Set a max size for tablets, but no fixed width/height */
+        max-height: 70px;
+        
+        margin: 2px;
+        font-size: clamp(20px, 4vh, 28px); /* Scale font with viewport height for consistency */
     }
 
     /* Keyboard adjustments */
