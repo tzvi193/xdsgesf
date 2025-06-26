@@ -466,7 +466,7 @@ h1 {
     color: var(--text-color);
     text-shadow: 0 0 4px black;
     width: 135px;
-    font-size: large;
+    font-size: 20px;
     box-shadow: var(--key-shadow);
     transition: all 0.5s;
     cursor: pointer;
