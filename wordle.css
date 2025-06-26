@@ -1133,15 +1133,25 @@ h1 {
     }
 
     /* --- REPLACE WITH THIS --- */
+    /* --- REPLACE WITH THIS BLOCK --- */
+
     .box {
-        aspect-ratio: 1 / 1;      /* This is key: keeps the box a perfect square */
-        height: 95%;              /* Set height based on the parent row's available height */
-        
-        /* Set a max size for tablets, but no fixed width/height */
+        aspect-ratio: 1 / 1; /* Keep the box a perfect square */
+
+        /*
+        This is the key fix:
+        The height is the SMALLER value between:
+        1. 95% of its parent row's height (for vertical fitting).
+        2. 18% of the viewport's width (for horizontal fitting, since 18vw * 5 = 90vw).
+        */
+        height: min(95%, 18vw);
+
+        /* A hard maximum size for very large screens like tablets */
         max-height: 70px;
         
         margin: 2px;
-        font-size: clamp(20px, 4vh, 28px); /* Scale font with viewport height for consistency */
+        /* Scale font size based on the box height for perfect fitting */
+        font-size: clamp(16px, 3vh, 28px);
     }
 
     /* Keyboard adjustments */
