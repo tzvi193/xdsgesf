@@ -332,7 +332,7 @@ function handle_input() {
         const not_in_VAR = document.getElementById("not_in_list")
         not_in_VAR.classList.add("reveal","shake")
         setTimeout(() => not_in_VAR.classList.remove("reveal","shake"),750)
-        if (!clearFakeWords) {
+        if (clearFakeWords) {
             liveInput = "";
             updateBoxes();
         }
