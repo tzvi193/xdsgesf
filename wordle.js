@@ -5,6 +5,7 @@ let gameOver = false;
 let restart_ = false;
 let hint_amount = 3;
 let allowFakeWords = false;
+let clearFakeWords = false;
 let won = false;
 let dailyMode = false;
 let previousInputLength = 0;
@@ -58,6 +59,12 @@ function backspace() {
     // Update the grid to reflect the change.
     // The updateBoxes() function already handles everything visually.
     updateBoxes();
+}
+
+function clear_fake() {
+    const clear_checkbox = document.getElementById("clear_fake_words");
+    clearFakeWords = clear_checkbox.checked;
+    localStorage.setItem("clearFakeWords", clearFakeWords);
 }
 
 function allow_fake() {
@@ -325,7 +332,11 @@ function handle_input() {
         const not_in_VAR = document.getElementById("not_in_list")
         not_in_VAR.classList.add("reveal","shake")
         setTimeout(() => not_in_VAR.classList.remove("reveal","shake"),750)
-        liveInput = ""
+        if (!clearFakeWords) {
+            liveInput = "";
+            updateBoxes();
+        }
+        
         updateBoxes();
         return;
     }
@@ -521,6 +532,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+    if (localStorage.getItem("clearFakeWords") !== null) {
+        clearFakeWords = localStorage.getItem("clearFakeWords") === "true";
+        document.getElementById("clear_fake_words").checked = clearFakeWords;
+    }
     if (localStorage.getItem("allowFakeWords") !== null) {
         allowFakeWords = localStorage.getItem("allowFakeWords") === "true";
         document.getElementById("allow_fake_words").checked = allowFakeWords;

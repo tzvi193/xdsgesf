@@ -653,6 +653,7 @@ h1 {
     padding: 10px;
     border-radius: 5px;
     color: white;
+    text-shadow: 0 0 3px black;
 }
 
 #light {
@@ -662,6 +663,7 @@ h1 {
     padding: 10px;
     border-radius: 5px;
     color: white;
+    text-shadow: 0 0 3px black;
 }
 
 #default {
@@ -671,6 +673,7 @@ h1 {
     padding: 10px;
     border-radius: 5px;
     color: white;
+    text-shadow: 0 0 3px black;
 }
 
 #theme {
@@ -805,6 +808,81 @@ h1 {
     font-weight: bold;
 }
 
+#allow_fake_DIV {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+#allow_fake_DIV .settings_labels {
+    margin-right: 10px;
+}
+
+#allow_fake_words {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: var(--box-bg);
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+#allow_fake_words:checked {
+    background-color: var(--primary-color);
+}
+
+#allow_fake_words:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#clear_fake_words {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: var(--box-bg);
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+#clear_fake_words:checked {
+    background-color: var(--primary-color);
+}
+
+#clear_fake_words:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#clear_fake_DIV {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+#clear_fake_DIV .settings_labels {
+    margin-right: 10px;
+}
 
 #close_help:hover {
     color: var(--primary-color);
@@ -1113,47 +1191,42 @@ h1 {
     /* Grid adjustments */
     /* ADDED: Make grid container fill available space */
     /* --- REPLACE WITH THIS --- */
+    .grid {
+        display: flex;
+        justify-content: center;
+        gap: 6px; /* Space between boxes */
+        width: calc(100% - 20px); /* Account for side margins */
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+
+    /* Ensure grid parent doesn't create extra space */
     #grid_parent {
-        flex-grow: 1;           /* Let it fill the available vertical space */
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: center;
-        min-height: 0;          /* Crucial flexbox fix to allow shrinking */
-        padding: 5px 0;         /* Add a little vertical space */
-        box-sizing: border-box;
-        margin: 0;              /* Remove any desktop margins */
-    }
-    
-    .grid {
-        flex-grow: 1;            /* Make all 6 rows share the parent's height equally */
-        display: flex;
-        justify-content: center;
-        align-items: center;     /* Vertically center the boxes within the row */
-        min-height: 0;           /* Allow the row itself to shrink */
+        gap: 6px; /* Space between rows */
+        padding: 10px 0;
+        width: 100%;
     }
 
     /* --- REPLACE WITH THIS --- */
     /* --- REPLACE WITH THIS BLOCK --- */
 
     .box {
-        aspect-ratio: 1 / 1; /* Keep the box a perfect square */
-
-        /*
-        This is the key fix:
-        The height is the SMALLER value between:
-        1. 95% of its parent row's height (for vertical fitting).
-        2. 18% of the viewport's width (for horizontal fitting, since 18vw * 5 = 90vw).
-        */
-        height: min(95%, 18vw);
-
-        /* A hard maximum size for very large screens like tablets */
-        max-height: 70px;
-        
-        margin: 2px;
-        /* Scale font size based on the box height for perfect fitting */
-        font-size: clamp(16px, 3vh, 28px);
+        aspect-ratio: 1 / 1; /* Perfect square */
+        width: 16vw; /* Slightly smaller to account for margins */
+        height: 16vw;
+        max-width: 55px; /* Maximum size */
+        max-height: 55px;
+        margin: 3px; /* Equal margin on all sides */
+        font-size: clamp(16px, 5vw, 24px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0; /* Prevent shrinking */
     }
-
     /* Keyboard adjustments */
     /* CHANGED: Keyboard is now part of the flex layout, not fixed */
     #keyboard {
@@ -1197,13 +1270,13 @@ h1 {
     #submit_button, #backspace {
         flex-grow: 1.5; /* Make these buttons wider than letter keys */
         font-size: 14px; /* Standardize font size on mobile */
-        text-transform: uppercase;
+        text-transform: uppercase;      
     }
     
     #backspace {
         font-size: 20px;
     }
-    
+
     /* Modal and Popup adjustments */
     #win_box, #lose_box {
         width: 45vw;
