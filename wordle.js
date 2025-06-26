@@ -44,7 +44,7 @@ async function enableDailyMode() {
             dailyMode = false;
             document.getElementById('daily_mode').classList.remove('active');
             document.getElementById('reveal_word').disabled = false;
-            restart();
+            yes()
         }
         dailyMode = true;
     }
