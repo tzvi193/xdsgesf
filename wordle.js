@@ -20,33 +20,40 @@ let gameStats = {
 };
 
 async function enableDailyMode() {
-    dailyMode = true;
-    document.getElementById('daily_mode').classList.add('active');
-    document.getElementById('reveal_word').disabled = true;
-    
-    try {
-        // Use a relative path if serving from the same origin
-        const response = await fetch('https://wordle-server-2piu.onrender.com/word');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    if (dailyMode == false) {
+        document.getElementById('daily_mode').innerText = "Endless";
+        try {
+            // Use a relative path if serving from the same origin
+            const response = await fetch('https://wordle-server-2piu.onrender.com/word');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            word_to_guess = data.word.toLowerCase();
+            currentRow = 0;
+            liveInput = "";
+            gameOver = false;
+            won = false;
+            revealed_letters = [];
+            resetGrid();
+            resetKeyboard();
+        
+        } catch (error) {
+            console.error('Error fetching daily word:', error);
+            alert('Could not fetch daily word. Using random word instead.');
+            dailyMode = false;
+            document.getElementById('daily_mode').classList.remove('active');
+            document.getElementById('reveal_word').disabled = false;
+            restart();
         }
-        const data = await response.json();
-        word_to_guess = data.word.toLowerCase();
-        currentRow = 0;
-        liveInput = "";
-        gameOver = false;
-        won = false;
-        revealed_letters = [];
-        resetGrid();
-        resetKeyboard();
-    } catch (error) {
-        console.error('Error fetching daily word:', error);
-        alert('Could not fetch daily word. Using random word instead.');
-        dailyMode = false;
-        document.getElementById('daily_mode').classList.remove('active');
-        document.getElementById('reveal_word').disabled = false;
-        restart();
+        dailyMode = true;
     }
+    else {
+        document.getElementById('daily_mode').innerText = "Daily mode";
+        dailyMode = false;
+        yes()
+    }
+
 }
 
 function backspace() {
