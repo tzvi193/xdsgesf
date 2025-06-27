@@ -224,12 +224,8 @@ function toggleSettings() {
 }
 
 function restart() {
-    if (dailyMode) {
-        enableDailyMode(); // Refresh the daily word
-    } else {
         document.getElementById("restartDIV").innerHTML = '<button id="restart_no" onclick="no()">\
         No</button><button onclick="yes()" id="restart_yes">Yes</button>'
-    }
 }
 
 function resetGrid() {
