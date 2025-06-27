@@ -472,9 +472,11 @@ function handle_input() {
                     setTimeout(() => box.classList.remove('celebrate'), 500);
                 }, index * 80); // Stagger the animations
             });
-            document.getElementById("top_parent").innerHTML = '<div id="restartDIV"><button class="top_buttons"\
-            onclick="yes()">New word</button></div>\
-            <button class="top_buttons" onclick="toggleStats()">Stats</button>'
+            setTimeout(() => {
+                document.getElementById("top_parent").innerHTML = '<div id="restartDIV"><button class="top_buttons"\
+                onclick="yes()">New word</button></div>\
+                <button class="top_buttons" onclick="toggleStats()">Stats</button>'
+            }, 750);
         }, 1500);
     }
     if (currentRow >= 5 && won == false){
