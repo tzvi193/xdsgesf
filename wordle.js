@@ -300,7 +300,6 @@ function resetStats() {
 }
 
 function yesReset() {
-    // Reset all statistics to zero
     gameStats = {
         gamesPlayed: 0,
         gamesWon: 0,
@@ -310,14 +309,10 @@ function yesReset() {
         hintsUsed: 0,
         totalGuesses: 0
     };
-    
-    // Save the reset stats
+
     saveStats();
-    
-    // Update the display immediately
     updateStatsDisplay();
     
-    // Reset the button back to original state
     document.getElementById("resetStatsDIV").innerHTML = 
         '<button class="stats_button" onclick="resetStats()">Reset Statistics</button>';
 }
