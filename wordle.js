@@ -449,7 +449,6 @@ function handle_input() {
 
     if (liveInput === word_to_guess) {
         const win_box_VAR = document.getElementById("win_box_parent");
-        // setTimeout(() => win_box_VAR.classList.add("won"), 1500);
         gameOver = true;
         won = true;
         gameStats.gamesWon++;
@@ -459,6 +458,26 @@ function handle_input() {
         gameStats.totalGuesses += (currentRow + 1);
         gameStats.gamesPlayed++;
         saveStats();
+
+        const winningRowIndex = currentRow;
+
+        setTimeout(() => {
+            const win_box_VAR = document.getElementById("win_box_parent");
+            //win_box_VAR.classList.add("won");
+
+            // Select all boxes in the winning row
+            const winningRow = document.querySelectorAll('.grid')[winningRowIndex];
+            const winningBoxes = winningRow.querySelectorAll('.box');
+            
+            // Apply celebration animation to each box
+            winningBoxes.forEach((box, index) => {
+                setTimeout(() => {
+                    box.classList.add('celebrate');
+                    // Remove class after animation completes
+                    setTimeout(() => box.classList.remove('celebrate'), 500);
+                }, index * 80); // Stagger the animations
+            });
+        }, 1500);
     }
     if (currentRow >= 5 && won == false){
         const lose_box_VAR = document.getElementById("lose_box_parent");

@@ -1058,6 +1058,17 @@ h1 {
     transition: all 0.2s;
 }
 
+@keyframes celebrate {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+.celebrate {
+  animation: celebrate 0.4s ease;
+  z-index: 10000;
+}
+
 #reset_no {
     background-color: rgb(96, 96, 96);
     width: 70px;
