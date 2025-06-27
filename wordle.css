@@ -1060,10 +1060,12 @@ h1 {
 
 #reset_no {
     background-color: rgb(96, 96, 96);
+    width: 70px;
 }
 
 #reset_yes {
     background-color: #538d4e;
+    width: 70px;
 }
 
 .help_text, #h3 {
@@ -1095,7 +1097,6 @@ h1 {
     transition: all 0.2s;
     text-shadow: 0 0 4px black;
 }
-
 #daily_mode:hover {
     background-color: var(--primary-hover);
     font-size: 102%;

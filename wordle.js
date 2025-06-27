@@ -450,7 +450,7 @@ function handle_input() {
 
     if (liveInput === word_to_guess) {
         const win_box_VAR = document.getElementById("win_box_parent");
-        setTimeout(() => win_box_VAR.classList.add("won"), 1500);
+        // setTimeout(() => win_box_VAR.classList.add("won"), 1500);
         gameOver = true;
         won = true;
         gameStats.gamesWon++;
