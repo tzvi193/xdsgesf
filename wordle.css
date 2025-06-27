@@ -1119,8 +1119,25 @@ h1 {
     background-color: var(--secondary-hover);
 }
 
+#stats_page {
+    display: flex;
+    justify-content: center;
+}
 
-/* --- START OF RESPONSIVE DESIGN --- */
+#daily_stats, #random_stats {
+    color: var(--primary-color);
+    display: inline;
+    background-color: var(--bar-default-bg);
+    border-radius: 5px;
+    text-shadow: 0 0 4px black;
+    font-weight: bold;
+    width: 50%;
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 768px) {
     body {

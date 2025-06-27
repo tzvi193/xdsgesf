@@ -21,7 +21,7 @@ let gameStats = {
 
 async function enableDailyMode() {
     if (dailyMode == false) {
-        document.getElementById('daily_mode').innerText = "Endless";
+        document.getElementById('daily_mode').innerText = "Random";
         try {
             // Use a relative path if serving from the same origin
             const response = await fetch('https://wordle-server-2piu.onrender.com/word');
@@ -227,7 +227,8 @@ function restart() {
     if (dailyMode) {
         enableDailyMode(); // Refresh the daily word
     } else {
-        document.getElementById("restartDIV").innerHTML = '<button id="restart_no" onclick="no()">No</button><button onclick="yes()" id="restart_yes">Yes</button>'
+        document.getElementById("restartDIV").innerHTML = '<button id="restart_no" onclick="no()">\
+        No</button><button onclick="yes()" id="restart_yes">Yes</button>'
     }
 }
 
@@ -259,7 +260,8 @@ function yes() {
 }
 
 function no(){
-    document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">New word</button>'
+    document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">\
+    New word</button>'
 }
 
 function updateBoxes() {
@@ -343,7 +345,6 @@ function handle_input() {
             liveInput = "";
             updateBoxes();
         }
-        
         updateBoxes();
         return;
     }
@@ -353,10 +354,8 @@ function handle_input() {
     const answer = word_to_guess.split("");
     let letterUsed = Array(5).fill(false);
     
-    // Track keyboard key states to avoid overriding better states with worse ones
     const keyboardStates = {};
-    
-    // First pass - mark correct letters and track keyboard states
+
     for (let i = 0; i < 5; i++) {
         if (guess[i] === answer[i]) {
             letterUsed[i] = true;
@@ -364,7 +363,6 @@ function handle_input() {
         }
     }
 
-    // Second pass - mark present letters (only if not already correct)
     for (let i = 0; i < 5; i++) {
         if (guess[i] !== answer[i]) {
             let found = false;
@@ -372,21 +370,21 @@ function handle_input() {
                 if (!letterUsed[j] && guess[i] === answer[j]) {
                     letterUsed[j] = true;
                     found = true;
-                    // Only set to present if not already correct
+
                     if (keyboardStates[guess[i].toUpperCase()] !== 'correct') {
                         keyboardStates[guess[i].toUpperCase()] = 'present';
                     }
                     break;
                 }
             }
-            // Only set to absent if not already correct or present
+
             if (!found && !keyboardStates[guess[i].toUpperCase()]) {
                 keyboardStates[guess[i].toUpperCase()] = 'absent';
             }
         }
     }
 
-    // Apply keyboard colors based on final states
+
     Object.keys(keyboardStates).forEach(letter => {
         document.querySelectorAll(".keys").forEach(key => {
             if (key.innerText === letter) {
@@ -446,7 +444,7 @@ function handle_input() {
             }, 275);
         }, i * 275);
     }
-
+    // when user wins
     if (liveInput === word_to_guess) {
         const win_box_VAR = document.getElementById("win_box_parent");
         gameOver = true;
@@ -463,20 +461,20 @@ function handle_input() {
 
         setTimeout(() => {
             const win_box_VAR = document.getElementById("win_box_parent");
-            //win_box_VAR.classList.add("won");
 
-            // Select all boxes in the winning row
             const winningRow = document.querySelectorAll('.grid')[winningRowIndex];
             const winningBoxes = winningRow.querySelectorAll('.box');
             
-            // Apply celebration animation to each box
             winningBoxes.forEach((box, index) => {
                 setTimeout(() => {
                     box.classList.add('celebrate');
-                    // Remove class after animation completes
+
                     setTimeout(() => box.classList.remove('celebrate'), 500);
                 }, index * 80); // Stagger the animations
             });
+            document.getElementById("top_parent").innerHTML = '<div id="restartDIV"><button class="top_buttons"\
+            onclick="yes()">New word</button></div>\
+            <button class="top_buttons" onclick="toggleStats()">Stats</button>'
         }, 1500);
     }
     if (currentRow >= 5 && won == false){

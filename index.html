@@ -23,12 +23,11 @@
     </div>
   
     <div id="top_parent">
-            <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
-            <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily Mode</button>
+        <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+        <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily mode</button>
         <div id="restartDIV">
             <button class="top_buttons" onclick="restart()">New word</button>
         </div>
-        
     </div>
     <div id="grid_parent">
         <div class="grid">
@@ -173,6 +172,14 @@
     <div id="stats_box">
         <div id="close_stats" onclick="toggleStats()">×</div>
         <h2>Statistics</h2>
+        <div id="stats_page">
+            <div id="random_stats">
+                Random
+            </div>
+            <div id="daily_stats">
+                Daily
+            </div>
+        </div>
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-number" id="games-played">0</div>
