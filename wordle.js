@@ -247,13 +247,10 @@ function resetKeyboard() {
 }
 
 function yes() {
-    if (dailyMode) {
-        enableDailyMode(); // Get a new daily word
-    } else {
         saveStats();
         location.reload();
-    }
 }
+
 
 function no(){
     document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">\
