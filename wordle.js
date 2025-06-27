@@ -195,7 +195,7 @@ function hint() {
         
         // If no new letters are available, show a message
         if (availableLetters.length === 0) {
-            hintBtn.textContent = "All letters guessed!";
+            hintBtn.textContent = "No more letters";
         } else {
             // Pick a random available letter
             hint_letter = availableLetters[Math.floor(Math.random() * availableLetters.length)];
@@ -462,8 +462,9 @@ function handle_input() {
             });
             setTimeout(() => {
                 document.getElementById("top_parent").innerHTML = '<div id="restartDIV"><button class="top_buttons"\
-                onclick="yes()">New word</button></div>\
-                <button class="top_buttons" onclick="toggleStats()">Stats</button>'
+                onclick="yes()">Next word</button></div>\
+                <button class="top_buttons" onclick="toggleStats()">Statistics</button>';
+                toggleStats();
             }, 750);
         }, 1500);
     }
