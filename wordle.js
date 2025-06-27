@@ -409,17 +409,17 @@ function handle_input() {
         });
     });
 
-    // Reset letterUsed for box coloring
+    
     letterUsed = Array(5).fill(false);
 
-    // Mark correct positions again for box coloring
+    
     for (let i = 0; i < 5; i++) {
         if (guess[i] === answer[i]) {
             letterUsed[i] = true;
         }
     }
 
-    // Animate boxes with setTimeout
+    
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
             boxes[i].classList.add("flipping");
@@ -456,7 +456,7 @@ function handle_input() {
         gameStats.gamesWon++;
         gameStats.currentStreak++;
         gameStats.bestStreak = Math.max(gameStats.bestStreak, gameStats.currentStreak);
-        gameStats.guessDistribution[currentRow]++; // currentRow is 0-indexed for guesses
+        gameStats.guessDistribution[currentRow]++; 
         gameStats.totalGuesses += (currentRow + 1);
         gameStats.gamesPlayed++;
         saveStats();
