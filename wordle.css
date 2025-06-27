@@ -1126,7 +1126,7 @@ h1 {
 }
 
 #daily_stats, #random_stats {
-    color: var(--primary-color);
+    color: white;
     display: inline;
     background-color: var(--bar-default-bg);
     border-radius: 5px;

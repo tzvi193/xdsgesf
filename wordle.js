@@ -10,13 +10,25 @@ let won = false;
 let dailyMode = false;
 let previousInputLength = 0;
 let gameStats = {
-    gamesPlayed: 0,
-    gamesWon: 0,
-    currentStreak: 0,
-    bestStreak: 0,
-    guessDistribution: [0, 0, 0, 0, 0, 0, 0],
-    hintsUsed: 0,
-    totalGuesses: 0
+    random: {
+        gamesPlayed: 0,
+        gamesWon: 0,
+        currentStreak: 0,
+        bestStreak: 0,
+        guessDistribution: [0, 0, 0, 0, 0, 0, 0],
+        hintsUsed: 0,
+        totalGuesses: 0
+    },
+    daily: {
+        gamesPlayed: 0,
+        gamesWon: 0,
+        currentStreak: 0,
+        bestStreak: 0,
+        guessDistribution: [0, 0, 0, 0, 0, 0, 0],
+        hintsUsed: 0,
+        totalGuesses: 0
+    },
+    currentMode: 'random' // Tracks which mode is active
 };
 
 async function enableDailyMode() {
@@ -37,23 +49,32 @@ async function enableDailyMode() {
             revealed_letters = [];
             resetGrid();
             resetKeyboard();
-        
+            
+            // Set to daily mode and update stats display
+            dailyMode = true;
+            gameStats.currentMode = 'daily';
+            updateStatsDisplay();
+            document.getElementById("random_stats").style.backgroundColor = "var(--bar-default-bg)";
+            document.getElementById("daily_stats").style.backgroundColor = "var(--primary-color)";
+            
         } catch (error) {
             console.error('Error fetching daily word:', error);
             alert('Could not fetch daily word. Using random word instead.');
             dailyMode = false;
             document.getElementById('daily_mode').classList.remove('active');
             document.getElementById('reveal_word').disabled = false;
-            yes()
+            yes();
         }
-        dailyMode = true;
     }
     else {
         document.getElementById('daily_mode').innerText = "Daily mode";
         dailyMode = false;
-        yes()
+        gameStats.currentMode = 'random';
+        updateStatsDisplay();
+        document.getElementById("random_stats").style.backgroundColor = "var(--primary-color)";
+        document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
+        yes();
     }
-
 }
 
 function backspace() {
@@ -104,22 +125,23 @@ function toggleStats() {
 }
 
 function updateStatsDisplay() {
-    document.getElementById("games-played").textContent = gameStats.gamesPlayed;
-    document.getElementById("win-rate").textContent = gameStats.gamesPlayed > 0 ? 
-        Math.round((gameStats.gamesWon / gameStats.gamesPlayed) * 100) : 0;
-    document.getElementById("current-streak").textContent = gameStats.currentStreak;
-    document.getElementById("best-streak").textContent = gameStats.bestStreak;
+    const stats = gameStats[gameStats.currentMode];
     
-    const maxGuesses = Math.max(...gameStats.guessDistribution);
+    document.getElementById("games-played").textContent = stats.gamesPlayed;
+    document.getElementById("win-rate").textContent = stats.gamesPlayed > 0 ? 
+        Math.round((stats.gamesWon / stats.gamesPlayed) * 100) : 0;
+    document.getElementById("current-streak").textContent = stats.currentStreak;
+    document.getElementById("best-streak").textContent = stats.bestStreak;
+    
+    const maxGuesses = Math.max(...stats.guessDistribution);
     
     for (let i = 0; i < 7; i++) {
-        const count = gameStats.guessDistribution[i];
+        const count = stats.guessDistribution[i];
         const bar = document.getElementById(`bar-${i + 1}`);
         const countEl = document.getElementById(`count-${i + 1}`);
         
         countEl.textContent = count;
         
-        // Reset bar background completely if count is 0
         if (count === 0) {
             bar.style.background = "var(--bar-default-bg)";
         } else if (maxGuesses > 0) {
@@ -294,13 +316,25 @@ function resetStats() {
 
 function yesReset() {
     gameStats = {
-        gamesPlayed: 0,
-        gamesWon: 0,
-        currentStreak: 0,
-        bestStreak: 0,
-        guessDistribution: [0, 0, 0, 0, 0, 0, 0],
-        hintsUsed: 0,
-        totalGuesses: 0
+        random: {
+            gamesPlayed: 0,
+            gamesWon: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            guessDistribution: [0, 0, 0, 0, 0, 0, 0],
+            hintsUsed: 0,
+            totalGuesses: 0
+        },
+        daily: {
+            gamesPlayed: 0,
+            gamesWon: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            guessDistribution: [0, 0, 0, 0, 0, 0, 0],
+            hintsUsed: 0,
+            totalGuesses: 0
+        },
+        currentMode: 'random'
     };
 
     saveStats();
@@ -434,15 +468,23 @@ function handle_input() {
     }
     // when user wins
     if (liveInput === word_to_guess) {
-        const win_box_VAR = document.getElementById("win_box_parent");
+        const mode = dailyMode ? 'daily' : 'random';
+        const stats = gameStats[mode];
+        
         gameOver = true;
         won = true;
-        gameStats.gamesWon++;
-        gameStats.currentStreak++;
-        gameStats.bestStreak = Math.max(gameStats.bestStreak, gameStats.currentStreak);
-        gameStats.guessDistribution[currentRow]++; 
-        gameStats.totalGuesses += (currentRow + 1);
-        gameStats.gamesPlayed++;
+        stats.gamesWon++;
+        stats.currentStreak++;
+        stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
+        stats.guessDistribution[currentRow]++; 
+        stats.totalGuesses += (currentRow + 1);
+        stats.gamesPlayed++;
+        
+        // Reset the other mode's streak if this is daily mode
+        if (dailyMode) {
+            gameStats.random.currentStreak = 0;
+        }
+        
         saveStats();
 
         const winningRowIndex = currentRow;
@@ -555,12 +597,30 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("allow_fake_words").checked = allowFakeWords;
     }
     setupThemeSwitcher();
-    
+
     const savedTheme = localStorage.getItem('theme') || 'default';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateActiveThemeIndicator(savedTheme);
     loadStats();
     setupKeyboardLayout(); // Set up the dynamic keyboard
+
+    document.getElementById("random_stats").addEventListener("click", () => {
+        gameStats.currentMode = 'random';
+        updateStatsDisplay();
+        document.getElementById("random_stats").style.backgroundColor = "var(--primary-color)";
+        document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
+    });
+    
+    document.getElementById("daily_stats").addEventListener("click", () => {
+        gameStats.currentMode = 'daily';
+        updateStatsDisplay();
+        document.getElementById("daily_stats").style.backgroundColor = "var(--primary-color)";
+        document.getElementById("random_stats").style.backgroundColor = "var(--bar-default-bg)";
+    });
+    
+    // Initialize the buttons
+    document.getElementById("random_stats").style.backgroundColor = "var(--primary-color)";
+    document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
 });
 
 function setupThemeSwitcher() {
