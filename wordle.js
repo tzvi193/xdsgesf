@@ -502,12 +502,38 @@ function handle_input() {
                     setTimeout(() => box.classList.remove('celebrate'), 500);
                 }, index * 80); // Stagger the animations
             });
+            // ...and REPLACE it with this
             setTimeout(() => {
-                document.getElementById("top_parent").innerHTML = '<div id="restartDIV"><button class="top_buttons"\
-                onclick="yes()">Next word</button></div>\
-                <button class="top_buttons" onclick="toggleStats()">Statistics</button>';
+                const topParent = document.getElementById("top_parent");
+                
+                // 1. Clear the old buttons
+                topParent.innerHTML = ''; // Clearing is fine here, as we are building fresh.
+
+                // 2. Create the "Next word" button
+                const nextWordBtn = document.createElement('button');
+                nextWordBtn.className = 'top_buttons';
+                nextWordBtn.textContent = 'Next word';
+                nextWordBtn.onclick = yes; // Assign the function directly
+
+                // 3. Create the "Statistics" button
+                const statsBtn = document.createElement('button');
+                statsBtn.className = 'top_buttons';
+                statsBtn.textContent = 'Statistics';
+                statsBtn.onclick = toggleStats; // Assign the function directly
+
+                // 4. Create the container for the next word button
+                const restartDiv = document.createElement('div');
+                restartDiv.id = 'restartDIV';
+                restartDiv.appendChild(nextWordBtn);
+
+                // 5. Append the new elements to the parent container
+                topParent.appendChild(restartDiv);
+                topParent.appendChild(statsBtn);
+
+                // 6. Now, safely open the stats panel
                 toggleStats();
-            }, 750);
+
+            }, 750); // The delay remains the same
         }, 1500);
     }
     if (currentRow >= 5 && won == false){
