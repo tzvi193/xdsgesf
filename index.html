@@ -21,92 +21,93 @@
         <button  onclick="hint()" id="Hints" class="top_bar_buttons"><img id="light_bulb" src="output-onlinepngtools.png"></button>
         <button onclick="how_to()" id="how_to_play" class="top_bar_buttons">?</button>
     </div>
-  
-    <div id="top_parent">
-        <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
-        <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily mode</button>
-        <div id="restartDIV">
-            <button class="top_buttons" onclick="restart()">New word</button>
+    <div id="main-container">
+        <div id="top_parent">
+            <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+            <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily mode</button>
+            <div id="restartDIV">
+                <button class="top_buttons" onclick="restart()">New word</button>
+            </div>
         </div>
-    </div>
-    <div id="grid_parent">
-        <div class="grid">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+        <div id="grid_parent">
+            <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <div class="grid">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
         </div>
-        <div class="grid">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-        </div>
-        <div class="grid">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-        </div>
-        <div class="grid">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-        </div>
-        <div class="grid">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-        </div>
-        <div class="grid">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-        </div>
-    </div>
-    <div id="keyboard">
-        <div id="row1">
-            <div class="keys"><p>Q</p></div>
-            <div class="keys"><p>W</p></div>
-            <div class="keys"><p>E</p></div>
-            <div class="keys"><p>R</p></div>
-            <div class="keys"><p>T</p></div>
-            <div class="keys"><p>Y</p></div>
-            <div class="keys"><p>U</p></div>
-            <div class="keys"><p>I</p></div>
-            <div class="keys"><p>O</p></div>
-            <div class="keys"><p>P</p></div>
-        </div>
-        <div id="row2">
-            <div class="keys"><p>A</p></div>
-            <div class="keys"><p>S</p></div>
-            <div class="keys"><p>D</p></div>
-            <div class="keys"><p>F</p></div>
-            <div class="keys"><p>G</p></div>
-            <div class="keys"><p>H</p></div>
-            <div class="keys"><p>J</p></div>
-            <div class="keys"><p>K</p></div>
-            <div class="keys"><p>L</p></div>
-            <button class ="keys" class="keyboard_buttons" id="backspace" onclick="backspace()">⌫</button>
-        </div>
-        <div id="row3">
-            <div class="keys"><p>Z</p></div>
-            <div class="keys"><p>X</p></div>
-            <div class="keys"><p>C</p></div>
-            <div class="keys"><p>V</p></div>
-            <div class="keys"><p>B</p></div>
-            <div class="keys"><p>N</p></div>
-            <div class="keys"><p>M</p></div>
-            <button id="submit_button" onclick="handle_input()">ENTER</button>
+        <div id="keyboard">
+            <div id="row1">
+                <div class="keys"><p>Q</p></div>
+                <div class="keys"><p>W</p></div>
+                <div class="keys"><p>E</p></div>
+                <div class="keys"><p>R</p></div>
+                <div class="keys"><p>T</p></div>
+                <div class="keys"><p>Y</p></div>
+                <div class="keys"><p>U</p></div>
+                <div class="keys"><p>I</p></div>
+                <div class="keys"><p>O</p></div>
+                <div class="keys"><p>P</p></div>
+            </div>
+            <div id="row2">
+                <div class="keys"><p>A</p></div>
+                <div class="keys"><p>S</p></div>
+                <div class="keys"><p>D</p></div>
+                <div class="keys"><p>F</p></div>
+                <div class="keys"><p>G</p></div>
+                <div class="keys"><p>H</p></div>
+                <div class="keys"><p>J</p></div>
+                <div class="keys"><p>K</p></div>
+                <div class="keys"><p>L</p></div>
+                <button class ="keys" class="keyboard_buttons" id="backspace" onclick="backspace()">⌫</button>
+            </div>
+            <div id="row3">
+                <div class="keys"><p>Z</p></div>
+                <div class="keys"><p>X</p></div>
+                <div class="keys"><p>C</p></div>
+                <div class="keys"><p>V</p></div>
+                <div class="keys"><p>B</p></div>
+                <div class="keys"><p>N</p></div>
+                <div class="keys"><p>M</p></div>
+                <button id="submit_button" onclick="handle_input()">ENTER</button>
+            </div>
         </div>
     </div>
     <div id="win_box_parent">

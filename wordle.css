@@ -157,6 +157,17 @@ body {
     transition: all 0.2s;
 }
 
+#main-container {
+    width: 100%; /* Take up all available horizontal space */
+    max-width: 800px; /* This is the key! The content will not get wider than 800px */
+    margin: 0 auto; /* This centers the container horizontally */
+    
+    /* These flex properties ensure your vertical layout is preserved */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows the container to fill the vertical space */
+}
+
 .settings-content .settings_labels {
     text-shadow: var(--settings-text-shadow);
 }
@@ -392,7 +403,8 @@ h1 {
 }
 
 #keyboard {
-    width: 480px;
+    width: 100%; /* Make it fill the container's width */
+    max-width: 480px; /* But don't let it exceed its original size */
     height: 166px;
     padding-top: 20px;
     display: block;
