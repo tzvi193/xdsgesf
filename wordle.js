@@ -124,7 +124,7 @@ function reveal() {
 function reveal_yes() {
     document.getElementById("revealDIV").innerHTML = '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
     document.getElementById("reveal_word").innerText = word_to_guess;
-    setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 5000);
+    setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 1500);
     roundRevealed = true;
 }
 function reveal_no() {
