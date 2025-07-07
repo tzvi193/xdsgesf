@@ -458,31 +458,31 @@ function noReset() {
 }
 
 function handle_input() {
+    if (gameOver) return; // Prevent any action if game is already over
+
     if (liveInput.length !== 5) {
-        if (gameOver == true)
-            return
-        const not_enough_VAR = document.getElementById("not_enough_letters")
-        not_enough_VAR.classList.add("reveal","shake")
-        setTimeout(() => not_enough_VAR.classList.remove("reveal","shake"),750)
+        const not_enough_VAR = document.getElementById("not_enough_letters");
+        not_enough_VAR.classList.add("reveal", "shake");
+        setTimeout(() => not_enough_VAR.classList.remove("reveal", "shake"), 750);
         return;
     }
+
     if (!wordList.includes(liveInput) && !allowFakeWords) {
-        const not_in_VAR = document.getElementById("not_in_list")
-        not_in_VAR.classList.add("reveal","shake")
-        setTimeout(() => not_in_VAR.classList.remove("reveal","shake"),750)
+        const not_in_VAR = document.getElementById("not_in_list");
+        not_in_VAR.classList.add("reveal", "shake");
+        setTimeout(() => not_in_VAR.classList.remove("reveal", "shake"), 750);
         if (clearFakeWords) {
             liveInput = "";
             updateBoxes();
         }
-        updateBoxes();
         return;
     }
 
+    // --- All grid and keyboard coloring logic remains the same ---
     const boxes = document.querySelectorAll(".grid")[currentRow].querySelectorAll(".box");
     const guess = liveInput.split("");
     const answer = word_to_guess.split("");
     let letterUsed = Array(5).fill(false);
-    
     const keyboardStates = {};
 
     for (let i = 0; i < 5; i++) {
@@ -491,7 +491,6 @@ function handle_input() {
             keyboardStates[guess[i].toUpperCase()] = 'correct';
         }
     }
-
     for (let i = 0; i < 5; i++) {
         if (guess[i] !== answer[i]) {
             let found = false;
@@ -499,53 +498,38 @@ function handle_input() {
                 if (!letterUsed[j] && guess[i] === answer[j]) {
                     letterUsed[j] = true;
                     found = true;
-
                     if (keyboardStates[guess[i].toUpperCase()] !== 'correct') {
                         keyboardStates[guess[i].toUpperCase()] = 'present';
                     }
                     break;
                 }
             }
-
             if (!found && !keyboardStates[guess[i].toUpperCase()]) {
                 keyboardStates[guess[i].toUpperCase()] = 'absent';
             }
         }
     }
-
-
     Object.keys(keyboardStates).forEach(letter => {
         document.querySelectorAll(".keys").forEach(key => {
             if (key.innerText === letter) {
                 const state = keyboardStates[letter];
                 if (state === 'correct') {
-                    key.style.backgroundColor = "var(--correct-color)";
-                    key.style.color = "var(--key-correct-text)";
+                    key.style.backgroundColor = "var(--correct-color)"; key.style.color = "var(--key-correct-text)";
                 } else if (state === 'present') {
-                    key.style.backgroundColor = "var(--present-color)";
-                    key.style.color = "var(--key-present-text)";
+                    key.style.backgroundColor = "var(--present-color)"; key.style.color = "var(--key-present-text)";
                 } else if (state === 'absent') {
-                    // Only apply absent color if the key doesn't already have a better state
                     const currentBg = getComputedStyle(key).backgroundColor;
                     if (!currentBg.includes("104, 164, 92") && !currentBg.includes("208, 180, 84")) {
-                        key.style.backgroundColor = "var(--absent-color)";
-                        key.style.color = "var(--key-absent-text)";
+                        key.style.backgroundColor = "var(--absent-color)"; key.style.color = "var(--key-absent-text)";
                     }
                 }
             }
         });
     });
-
-    
     letterUsed = Array(5).fill(false);
-
-    
     for (let i = 0; i < 5; i++) {
-        if (guess[i] === answer[i]) {
-            letterUsed[i] = true;
-        }
+        if (guess[i] === answer[i]) { letterUsed[i] = true; }
     }
-
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
             boxes[i].classList.add("flipping");
@@ -573,95 +557,87 @@ function handle_input() {
             }, 275);
         }, i * 275);
     }
-    // when user wins
+
+    // --- START: RESTRUCTURED WIN/LOSS/CONTINUE LOGIC ---
+    
+    // Condition 1: Player WINS
     if (liveInput === word_to_guess) {
+        gameOver = true;
+        won = true;
+
         if (!roundRevealed) {
             const mode = dailyMode ? 'daily' : 'random';
             const stats = gameStats[mode];
-            gameOver = true;
-            won = true;
             stats.gamesWon++;
             stats.currentStreak++;
             stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
-            stats.guessDistribution[currentRow]++; 
-            stats.totalGuesses += (currentRow + 1);
+            stats.guessDistribution[currentRow]++;
             stats.gamesPlayed++;
-            // Reset the other mode's streak if this is daily mode
             if (dailyMode) {
                 gameStats.random.currentStreak = 0;
             }
             saveStats();
-        } else {
-            gameOver = true;
-            won = true;
         }
+
         const winningRowIndex = currentRow;
-
         setTimeout(() => {
-            const win_box_VAR = document.getElementById("win_box_parent");
-
             const winningRow = document.querySelectorAll('.grid')[winningRowIndex];
             const winningBoxes = winningRow.querySelectorAll('.box');
-            
             winningBoxes.forEach((box, index) => {
                 setTimeout(() => {
                     box.classList.add('celebrate');
-
                     setTimeout(() => box.classList.remove('celebrate'), 500);
-                }, index * 80); // Stagger the animations
+                }, index * 80);
             });
-            // ...and REPLACE it with this
             setTimeout(() => {
                 const topParent = document.getElementById("top_parent");
-                
-                // 1. Clear the old buttons
-                topParent.innerHTML = ''; // Clearing is fine here, as we are building fresh.
-
-                // 2. Create the "Next word" button
+                topParent.innerHTML = '';
                 const nextWordBtn = document.createElement('button');
                 nextWordBtn.className = 'top_buttons';
                 nextWordBtn.textContent = 'Next word';
-                nextWordBtn.onclick = yes; // Assign the function directly
-
-                // 3. Create the "Statistics" button
+                nextWordBtn.onclick = yes;
                 const statsBtn = document.createElement('button');
                 statsBtn.className = 'top_buttons';
                 statsBtn.textContent = 'Statistics';
-                statsBtn.onclick = toggleStats; // Assign the function directly
-
-                // 4. Create the container for the next word button
+                statsBtn.onclick = toggleStats;
                 const restartDiv = document.createElement('div');
                 restartDiv.id = 'restartDIV';
                 restartDiv.appendChild(nextWordBtn);
-
-                // 5. Append the new elements to the parent container
                 topParent.appendChild(restartDiv);
                 topParent.appendChild(statsBtn);
-
-                // 6. Now, safely open the stats panel
                 toggleStats();
-
-            }, 750); // The delay remains the same
+            }, 750);
         }, 1500);
-    }
-    if (currentRow >= 5 && won == false){
+
+    // Condition 2: Player LOSES (out of guesses)
+    } else if (currentRow >= 5) {
+        gameOver = true;
+
         if (!roundRevealed) {
-            const lose_box_VAR = document.getElementById("lose_box_parent");
-            setTimeout(() => lose_box_VAR.classList.add("lost"), 1500);
-            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
-            gameStats.currentStreak = 0;
-            gameStats.gamesPlayed++;
-            gameStats.guessDistribution[6] // Increment the 7th bar (index 6) for failed attempts
+            const mode = dailyMode ? 'daily' : 'random';
+            const stats = gameStats[mode];
+            stats.gamesPlayed++;
+            stats.currentStreak = 0;
+            stats.guessDistribution[6]++; // Index 6 is for losses
             saveStats();
-        } else {
-            const lose_box_VAR = document.getElementById("lose_box_parent");
-            setTimeout(() => lose_box_VAR.classList.add("lost"), 1500);
-            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
         }
+
+        setTimeout(() => {
+            const lose_box_VAR = document.getElementById("lose_box_parent");
+            lose_box_VAR.classList.add("lost");
+            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -";
+            updateStatsDisplay(); // Explicitly update stats display on loss
+        }, 1500);
+
+    // Condition 3: Game CONTINUES
+    } else {
+        liveInput = "";
+        currentRow++;
     }
-    liveInput = "";
-    currentRow++;
-    roundRevealed = false;
+
+    roundRevealed = false; // This can be reset after every guess attempt
+    
+    // --- END: RESTRUCTURED LOGIC ---
 }
 
 document.addEventListener("keydown", (event) => {

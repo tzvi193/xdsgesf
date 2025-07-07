@@ -1099,6 +1099,7 @@ h1 {
     display: none;
     padding: 0 1px;
 }
+
 .stats_button {
     background-color: var(--bar-default-bg);
     border: 0px;
