@@ -196,27 +196,33 @@ function toggleStats() {
 
 function updateStatsDisplay() {
     const stats = gameStats[gameStats.currentMode];
-    
     document.getElementById("games-played").textContent = stats.gamesPlayed;
     document.getElementById("win-rate").textContent = stats.gamesPlayed > 0 ? 
         Math.round((stats.gamesWon / stats.gamesPlayed) * 100) : 0;
     document.getElementById("current-streak").textContent = stats.currentStreak;
     document.getElementById("best-streak").textContent = stats.bestStreak;
-    
     const maxGuesses = Math.max(...stats.guessDistribution);
-    
     for (let i = 0; i < 7; i++) {
-        const count = stats.guessDistribution[i];
         const bar = document.getElementById(`bar-${i + 1}`);
-        const countEl = document.getElementById(`count-${i + 1}`);
-        
-        countEl.textContent = count;
-        
+        const barFill = bar.querySelector('.bar-fill');
+        const countLeft = bar.querySelector(`#count-${i + 1}-left`);
+        const countRight = barFill.querySelector(`#count-${i + 1}`);
+        const count = stats.guessDistribution[i];
+        countLeft.textContent = count;
+        countRight.textContent = count;
         if (count === 0) {
-            bar.style.background = "var(--bar-default-bg)";
-        } else if (maxGuesses > 0) {
-            const percentage = (count / maxGuesses) * 100;
-            bar.style.background = `linear-gradient(to right, var(--primary-color) ${percentage}%, var(--bar-default-bg) ${percentage}%)`;
+            countLeft.style.display = 'block';
+            countRight.style.display = 'none';
+            barFill.style.width = '0';
+        } else {
+            countLeft.style.display = 'none';
+            countRight.style.display = 'block';
+            if (maxGuesses > 0) {
+                const percentage = (count / maxGuesses) * 100;
+                barFill.style.width = `${percentage}%`;
+            } else {
+                barFill.style.width = '0';
+            }
         }
     }
 }
