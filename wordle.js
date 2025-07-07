@@ -339,6 +339,9 @@ function yesReset() {
 
     saveStats();
     updateStatsDisplay();
+
+    document.getElementById("random_stats").style.backgroundColor = "var(--primary-color)";
+    document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
     
     document.getElementById("resetStatsDIV").innerHTML = 
         '<button class="stats_button" onclick="resetStats()">Reset Statistics</button>';
