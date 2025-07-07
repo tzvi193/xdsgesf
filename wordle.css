@@ -780,7 +780,7 @@ h1 {
     position: absolute;
     width: 600px;
     height: auto;
-    max-width: calc(100vw - 60px); /* Account for 20px padding on each side + 10px margin on each side */
+    max-width: calc(100vw - 60px); 
     background-color: var(--bg-color);
     transform: translate(-50%, -50%);
     top: 50%;
