@@ -32,6 +32,7 @@ let gameStats = {
 };
 
 let roundRevealed = false;
+let roundDisqualified = false;
 
 async function enableDailyMode() {
 
@@ -162,6 +163,7 @@ function reveal() {
         document.getElementById("reveal_yes").onclick = reveal_yes;
     }
     roundRevealed = true;
+    roundDisqualified = true;
 }
 
 function reveal_yes() {
@@ -302,6 +304,7 @@ function hint() {
             hint_amount--;
             gameStats.hintsUsed++;
             saveStats();
+            roundDisqualified = true;
         }
     }
 
@@ -376,6 +379,8 @@ function resetGame() {
         </div>
     `;
     renderRevealButton();
+    roundRevealed = false;
+    roundDisqualified = false;
 }
 
 function no(){
@@ -562,33 +567,114 @@ function handle_input() {
     
     // Condition 1: Player WINS
     if (liveInput === word_to_guess) {
-        gameOver = true;
-        won = true;
+        if (!roundDisqualified) {
+            gameOver = true;
+            won = true;
 
-        if (!roundRevealed) {
-            const mode = dailyMode ? 'daily' : 'random';
-            const stats = gameStats[mode];
-            stats.gamesWon++;
-            stats.currentStreak++;
-            stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
-            stats.guessDistribution[currentRow]++;
-            stats.gamesPlayed++;
-            if (dailyMode) {
-                gameStats.random.currentStreak = 0;
+            if (!roundRevealed) {
+                const mode = dailyMode ? 'daily' : 'random';
+                const stats = gameStats[mode];
+                stats.gamesWon++;
+                stats.currentStreak++;
+                stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
+                stats.guessDistribution[currentRow]++;
+                stats.gamesPlayed++;
+                if (dailyMode) {
+                    gameStats.random.currentStreak = 0;
+                }
+                saveStats();
             }
-            saveStats();
+
+            const winningRowIndex = currentRow;
+            setTimeout(() => {
+                const winningRow = document.querySelectorAll('.grid')[winningRowIndex];
+                const winningBoxes = winningRow.querySelectorAll('.box');
+                winningBoxes.forEach((box, index) => {
+                    setTimeout(() => {
+                        box.classList.add('celebrate');
+                        setTimeout(() => box.classList.remove('celebrate'), 500);
+                    }, index * 80);
+                });
+                setTimeout(() => {
+                    const topParent = document.getElementById("top_parent");
+                    topParent.innerHTML = '';
+                    const nextWordBtn = document.createElement('button');
+                    nextWordBtn.className = 'top_buttons';
+                    nextWordBtn.textContent = 'Next word';
+                    nextWordBtn.onclick = yes;
+                    const statsBtn = document.createElement('button');
+                    statsBtn.className = 'top_buttons';
+                    statsBtn.textContent = 'Statistics';
+                    statsBtn.onclick = toggleStats;
+                    const restartDiv = document.createElement('div');
+                    restartDiv.id = 'restartDIV';
+                    restartDiv.appendChild(nextWordBtn);
+                    topParent.appendChild(restartDiv);
+                    topParent.appendChild(statsBtn);
+                    toggleStats();
+                }, 750);
+            }, 1500);
+        } else {
+            gameOver = true;
+            won = true;
+            // Show win UI and stats panel, but do not update stats
+            const winningRowIndex = currentRow;
+            setTimeout(() => {
+                const win_box_VAR = document.getElementById("win_box_parent");
+                const winningRow = document.querySelectorAll('.grid')[winningRowIndex];
+                const winningBoxes = winningRow.querySelectorAll('.box');
+                winningBoxes.forEach((box, index) => {
+                    setTimeout(() => {
+                        box.classList.add('celebrate');
+                        setTimeout(() => box.classList.remove('celebrate'), 500);
+                    }, index * 80);
+                });
+                setTimeout(() => {
+                    const topParent = document.getElementById("top_parent");
+                    topParent.innerHTML = '';
+                    const nextWordBtn = document.createElement('button');
+                    nextWordBtn.className = 'top_buttons';
+                    nextWordBtn.textContent = 'Next word';
+                    nextWordBtn.onclick = yes;
+                    const statsBtn = document.createElement('button');
+                    statsBtn.className = 'top_buttons';
+                    statsBtn.textContent = 'Statistics';
+                    statsBtn.onclick = toggleStats;
+                    const restartDiv = document.createElement('div');
+                    restartDiv.id = 'restartDIV';
+                    restartDiv.appendChild(nextWordBtn);
+                    topParent.appendChild(restartDiv);
+                    topParent.appendChild(statsBtn);
+                    toggleStats();
+                }, 750);
+            }, 1500);
         }
 
-        const winningRowIndex = currentRow;
-        setTimeout(() => {
-            const winningRow = document.querySelectorAll('.grid')[winningRowIndex];
-            const winningBoxes = winningRow.querySelectorAll('.box');
-            winningBoxes.forEach((box, index) => {
-                setTimeout(() => {
-                    box.classList.add('celebrate');
-                    setTimeout(() => box.classList.remove('celebrate'), 500);
-                }, index * 80);
-            });
+    // Condition 2: Player LOSES (out of guesses)
+    } else if (currentRow >= 5) {
+        gameOver = true;
+
+        if (!roundDisqualified) {
+            if (!roundRevealed) {
+                const mode = dailyMode ? 'daily' : 'random';
+                const stats = gameStats[mode];
+                stats.gamesPlayed++;
+                stats.currentStreak = 0;
+                stats.guessDistribution[6]++; // Index 6 is for losses
+                saveStats();
+            }
+
+            setTimeout(() => {
+                const lose_box_VAR = document.getElementById("lose_box_parent");
+                lose_box_VAR.classList.add("lost");
+                document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -";
+                updateStatsDisplay(); // Explicitly update stats display on loss
+            }, 1500);
+        } else {
+            const lose_box_VAR = document.getElementById("lose_box_parent");
+            setTimeout(() => lose_box_VAR.classList.add("lost"), 1500);
+            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
+            // Show losing UI and stats panel, but do not update stats
             setTimeout(() => {
                 const topParent = document.getElementById("top_parent");
                 topParent.innerHTML = '';
@@ -607,28 +693,7 @@ function handle_input() {
                 topParent.appendChild(statsBtn);
                 toggleStats();
             }, 750);
-        }, 1500);
-
-    // Condition 2: Player LOSES (out of guesses)
-    } else if (currentRow >= 5) {
-        gameOver = true;
-
-        if (!roundRevealed) {
-            const mode = dailyMode ? 'daily' : 'random';
-            const stats = gameStats[mode];
-            stats.gamesPlayed++;
-            stats.currentStreak = 0;
-            stats.guessDistribution[6]++; // Index 6 is for losses
-            saveStats();
         }
-
-        setTimeout(() => {
-            const lose_box_VAR = document.getElementById("lose_box_parent");
-            lose_box_VAR.classList.add("lost");
-            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -";
-            updateStatsDisplay(); // Explicitly update stats display on loss
-        }, 1500);
-
     // Condition 3: Game CONTINUES
     } else {
         liveInput = "";
