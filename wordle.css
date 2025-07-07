@@ -238,11 +238,12 @@ body {
 }
 
 #final_rules {
-    font-size: 16px;
+    font-size: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
     color: var(--primary-color);
     text-shadow: ver(--text-shadow);
+    font-weight: bold;
 }
 
 #close_settings {
@@ -1226,6 +1227,9 @@ h1 {
     #settings, #stats, #Hints, #how_to_play {
         width: 40px; /* Smaller icons */
         height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     #light_bulb, #settings_img, #stats_icon {
@@ -1451,4 +1455,16 @@ h1 {
     0% { transform: rotateX(0deg);}
     50% { transform: rotateX(90deg);}
     100% { transform: rotateX(0deg);}
+}
+
+@media screen and (max-width: 768px) {
+    #stats {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #stats_icon {
+        display: block;
+        margin: 0 auto;
+    }
 }
