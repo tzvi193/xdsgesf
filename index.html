@@ -23,7 +23,9 @@
     </div>
     <div id="main-container">
         <div id="top_parent">
-            <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+            <div id="revealDIV">
+                <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+            </div>
             <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily mode</button>
             <div id="restartDIV">
                 <button class="top_buttons" onclick="restart()">New word</button>
@@ -171,7 +173,7 @@
             The letter <b>R</b> is not in the word in any spot.
         </p>
         <p id="final_rules"><b>The word must be five letters, and in 
-        the dictionary.<br><br>Revealing the word will invalidate that round.</b></p>
+        the dictionary.<br><br>Revealing the word will disqualify that round.</b></p>
     </div>
     <div id="stats_overlay"></div>
     <div id="stats_box">

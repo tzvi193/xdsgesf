@@ -117,11 +117,19 @@ function how_to(){
 }
 
 function reveal() {
-    document.getElementById("reveal_word").innerText = word_to_guess;
+    document.getElementById("revealDIV").innerHTML = '<button id="reveal_no" onclick="reveal_no()">No</button><button id="reveal_yes" onclick="reveal_yes()">Yes</button>';
     setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 1000);
     roundRevealed = true;
 }
-
+function reveal_yes() {
+    document.getElementById("revealDIV").innerHTML = '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
+    document.getElementById("reveal_word").innerText = word_to_guess;
+    setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 5000);
+    roundRevealed = true;
+}
+function reveal_no() {
+    document.getElementById("revealDIV").innerHTML = '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
+}
 function toggleStats() {
     const statsBox = document.getElementById("stats_box");
     const overlay = document.getElementById("stats_overlay");

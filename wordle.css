@@ -725,7 +725,7 @@ h1 {
     50% { transform: scale(1.15); }
     100% { transform: scale(1); }
 }
-#restart_no {
+#restart_no, #reveal_no {
     border: 0px;
     background-color: rgb(96, 96, 96);
     width: 60px;
@@ -740,7 +740,7 @@ h1 {
     cursor: pointer;
     text-shadow: 0 0 2px black;
 }
-#restart_yes{
+#restart_yes, #reveal_yes {
     border: 0px;
     background-color: #538d4e;
     border-radius: var(--button-border-radius);
@@ -1210,7 +1210,7 @@ h1 {
         margin-bottom: 5px;
         margin-top: 5px;
     }
-    #restart_yes, #restart_no {
+    #restart_yes, #restart_no, #reveal_yes, #reveal_no {
         flex: 1;              
         width: auto;          
         height: auto;         
@@ -1233,7 +1233,7 @@ h1 {
         font-size: 13px; /* Disable hover growth to prevent layout shifts */
         width: auto; /* Keep width consistent */
     }
-    #restartDIV {
+    #restartDIV, #revealDIV {
         flex: 1;
         display: flex;
     }
