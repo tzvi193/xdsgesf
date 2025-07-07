@@ -143,20 +143,31 @@ function how_to(){
 }
 
 function reveal() {
-    document.getElementById("revealDIV").innerHTML = '<button id="reveal_no" onclick="reveal_no()">No</button><button id="reveal_yes" onclick="reveal_yes()">Yes</button>';
-    setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 1000);
+    // Show Yes/No buttons, hide the reveal button
+    document.getElementById("revealDIV").innerHTML =
+        '<button class="top_buttons" id="reveal_no" onclick="reveal_no()">No</button>' +
+        '<button class="top_buttons" id="reveal_yes" onclick="reveal_yes()">Yes</button>';
     roundRevealed = true;
 }
 
 function reveal_yes() {
-    document.getElementById("revealDIV").innerHTML = '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
-    document.getElementById("reveal_word").innerText = word_to_guess;
-    setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 1500);
+    // Restore the reveal button and show the word for a moment
+    document.getElementById("revealDIV").innerHTML =
+        '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
+    const revealBtn = document.getElementById("reveal_word");
+    if (revealBtn) {
+        revealBtn.innerText = word_to_guess;
+        setTimeout(() => {
+            revealBtn.innerText = "Reveal word";
+        }, 1500);
+    }
     roundRevealed = true;
 }
 
 function reveal_no() {
-    document.getElementById("revealDIV").innerHTML = '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
+    // Just restore the reveal button
+    document.getElementById("revealDIV").innerHTML =
+        '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
 }
 
 function toggleStats() {
