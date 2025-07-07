@@ -32,6 +32,12 @@ let gameStats = {
 };
 
 async function enableDailyMode() {
+
+    /*
+    document.getElementById("coming_soon").classList.add("reveal"); // Placeholder for future functionality
+    setTimeout(() => document.getElementById("coming_soon").classList.remove("reveal"),750)
+    */
+
     if (dailyMode == false) {
         document.getElementById('daily_mode').innerText = "Random";
         try {
@@ -75,7 +81,9 @@ async function enableDailyMode() {
         document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
         yes();
     }
+    
 }
+
 
 function backspace() {
     // Prevent action if the game has ended
