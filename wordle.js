@@ -279,10 +279,37 @@ function resetKeyboard() {
 }
 
 function yes() {
-        saveStats();
-        location.reload();
+    saveStats();
+    resetGame();
 }
 
+function resetGame() {
+    // Pick a new word
+    word_to_guess = wordList[Math.floor(Math.random() * wordList.length)];
+    currentRow = 0;
+    liveInput = "";
+    gameOver = false;
+    restart_ = false;
+    won = false;
+    previousInputLength = 0;
+    revealed_letters = [];
+    // Reset grid and keyboard
+    resetGrid();
+    resetKeyboard();
+    // Hide overlays and boxes
+    document.getElementById("win_box_parent").classList.remove("showing");
+    document.getElementById("lose_box_parent").classList.remove("lost");
+    document.getElementById("word_reveal").innerHTML = "";
+    // Restore top buttons
+    const topParent = document.getElementById("top_parent");
+    topParent.innerHTML = `
+        <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+        <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily mode</button>
+        <div id="restartDIV">
+            <button class="top_buttons" onclick="restart()">New word</button>
+        </div>
+    `;
+}
 
 function no(){
     document.getElementById("restartDIV").innerHTML = '<button class="top_buttons" onclick="restart()">\
