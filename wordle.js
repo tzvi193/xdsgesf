@@ -31,6 +31,8 @@ let gameStats = {
     currentMode: 'random' // Tracks which mode is active
 };
 
+let roundRevealed = false;
+
 async function enableDailyMode() {
 
     document.getElementById("coming_soon").classList.add("reveal"); // Placeholder for future functionality
@@ -117,6 +119,7 @@ function how_to(){
 function reveal() {
     document.getElementById("reveal_word").innerText = word_to_guess;
     setTimeout(() => document.getElementById("reveal_word").innerText = "Reveal word", 1000);
+    roundRevealed = true;
 }
 
 function toggleStats() {
@@ -478,25 +481,26 @@ function handle_input() {
     }
     // when user wins
     if (liveInput === word_to_guess) {
-        const mode = dailyMode ? 'daily' : 'random';
-        const stats = gameStats[mode];
-        
-        gameOver = true;
-        won = true;
-        stats.gamesWon++;
-        stats.currentStreak++;
-        stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
-        stats.guessDistribution[currentRow]++; 
-        stats.totalGuesses += (currentRow + 1);
-        stats.gamesPlayed++;
-        
-        // Reset the other mode's streak if this is daily mode
-        if (dailyMode) {
-            gameStats.random.currentStreak = 0;
+        if (!roundRevealed) {
+            const mode = dailyMode ? 'daily' : 'random';
+            const stats = gameStats[mode];
+            gameOver = true;
+            won = true;
+            stats.gamesWon++;
+            stats.currentStreak++;
+            stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
+            stats.guessDistribution[currentRow]++; 
+            stats.totalGuesses += (currentRow + 1);
+            stats.gamesPlayed++;
+            // Reset the other mode's streak if this is daily mode
+            if (dailyMode) {
+                gameStats.random.currentStreak = 0;
+            }
+            saveStats();
+        } else {
+            gameOver = true;
+            won = true;
         }
-        
-        saveStats();
-
         const winningRowIndex = currentRow;
 
         setTimeout(() => {
@@ -547,16 +551,23 @@ function handle_input() {
         }, 1500);
     }
     if (currentRow >= 5 && won == false){
-        const lose_box_VAR = document.getElementById("lose_box_parent");
-        setTimeout(() => lose_box_VAR.classList.add("lost"), 1500);
-        document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
-        gameStats.currentStreak = 0;
-        gameStats.gamesPlayed++;
-        gameStats.guessDistribution[6]++; // Increment the 7th bar (index 6) for failed attempts
-        saveStats();
+        if (!roundRevealed) {
+            const lose_box_VAR = document.getElementById("lose_box_parent");
+            setTimeout(() => lose_box_VAR.classList.add("lost"), 1500);
+            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
+            gameStats.currentStreak = 0;
+            gameStats.gamesPlayed++;
+            gameStats.guessDistribution[6]++; // Increment the 7th bar (index 6) for failed attempts
+            saveStats();
+        } else {
+            const lose_box_VAR = document.getElementById("lose_box_parent");
+            setTimeout(() => lose_box_VAR.classList.add("lost"), 1500);
+            document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
+        }
     }
     liveInput = "";
     currentRow++;
+    roundRevealed = false;
 }
 
 document.addEventListener("keydown", (event) => {
