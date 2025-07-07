@@ -142,18 +142,31 @@ function how_to(){
     }
 }
 
+// Utility to render the Reveal button and attach its handler
+function renderRevealButton() {
+    const revealDiv = document.getElementById("revealDIV");
+    if (revealDiv) {
+        revealDiv.innerHTML = '<button class="top_buttons" id="reveal_word">Reveal word</button>';
+        document.getElementById("reveal_word").onclick = reveal;
+    }
+}
+
 function reveal() {
     // Show Yes/No buttons, hide the reveal button
-    document.getElementById("revealDIV").innerHTML =
-        '<button class="top_buttons" id="reveal_no" onclick="reveal_no()">No</button>' +
-        '<button class="top_buttons" id="reveal_yes" onclick="reveal_yes()">Yes</button>';
+    const revealDiv = document.getElementById("revealDIV");
+    if (revealDiv) {
+        revealDiv.innerHTML =
+            '<button class="top_buttons" id="reveal_no">No</button>' +
+            '<button class="top_buttons" id="reveal_yes">Yes</button>';
+        document.getElementById("reveal_no").onclick = reveal_no;
+        document.getElementById("reveal_yes").onclick = reveal_yes;
+    }
     roundRevealed = true;
 }
 
 function reveal_yes() {
     // Restore the reveal button and show the word for a moment
-    document.getElementById("revealDIV").innerHTML =
-        '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
+    renderRevealButton();
     const revealBtn = document.getElementById("reveal_word");
     if (revealBtn) {
         revealBtn.innerText = word_to_guess;
@@ -166,8 +179,7 @@ function reveal_yes() {
 
 function reveal_no() {
     // Just restore the reveal button
-    document.getElementById("revealDIV").innerHTML =
-        '<button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>';
+    renderRevealButton();
 }
 
 function toggleStats() {
@@ -351,12 +363,13 @@ function resetGame() {
     // Restore top buttons
     const topParent = document.getElementById("top_parent");
     topParent.innerHTML = `
-        <button class="top_buttons" id="reveal_word" onclick="reveal()">Reveal word</button>
+        <div id="revealDIV"></div>
         <button class="top_buttons" id="daily_mode" onclick="enableDailyMode()">Daily mode</button>
         <div id="restartDIV">
             <button class="top_buttons" onclick="restart()">New word</button>
         </div>
     `;
+    renderRevealButton();
 }
 
 function no(){
