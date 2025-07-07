@@ -110,10 +110,36 @@ function allow_fake() {
     localStorage.setItem("allowFakeWords", allowFakeWords);
 }
 
+function flipHelpBoxes() {
+    // Get all help grids
+    const helpGrids = document.querySelectorAll('.help_grid');
+    if (!helpGrids.length) return;
+    // Find the max number of columns
+    let maxCols = 0;
+    helpGrids.forEach(grid => {
+        maxCols = Math.max(maxCols, grid.children.length);
+    });
+    // For each row and column index, stagger the start of each row
+    helpGrids.forEach((grid, rowIdx) => {
+        for (let col = 0; col < maxCols; col++) {
+            setTimeout(() => {
+                const box = grid.children[col];
+                if (box) {
+                    box.classList.add('flipping');
+                    setTimeout(() => box.classList.remove('flipping'), 420);
+                }
+            }, rowIdx * 110 + col * 110); // 110ms delay between rows, then columns
+        }
+    });
+}
+
 function how_to(){
     const helpBox = document.getElementById("how_to_play_box");
     helpBox.classList.toggle("showing");
     document.getElementById("overlay_help").classList.toggle("active");
+    if (helpBox.classList.contains("showing")) {
+        flipHelpBoxes();
+    }
 }
 
 function reveal() {
@@ -595,7 +621,7 @@ function handle_input() {
             document.getElementById("word_reveal").innerHTML = "- " + word_to_guess + " -"
             gameStats.currentStreak = 0;
             gameStats.gamesPlayed++;
-            gameStats.guessDistribution[6]++; // Increment the 7th bar (index 6) for failed attempts
+            gameStats.guessDistribution[6] // Increment the 7th bar (index 6) for failed attempts
             saveStats();
         } else {
             const lose_box_VAR = document.getElementById("lose_box_parent");

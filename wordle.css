@@ -1401,3 +1401,13 @@ h1 {
         font-size: 11px;
     }
 }
+
+.box_help.flipping {
+    animation: flipHelp 0.5s;
+}
+
+@keyframes flipHelp {
+    0% { transform: rotateX(0deg);}
+    50% { transform: rotateX(90deg);}
+    100% { transform: rotateX(0deg);}
+}
