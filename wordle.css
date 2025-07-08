@@ -598,7 +598,7 @@ h1 {
 }
 
 /* Notifications */
-#not_in_list_parent, #not_enough_letters_parent, #coming_soon_parent, #disqualify_parent {
+#not_in_list_parent, #not_enough_letters_parent, #coming_soon_parent {
     pointer-events: none;
     top: 120px;
     display: flex;
@@ -607,11 +607,7 @@ h1 {
     width: 100%;
 }
 
-#disqualify_parent {
-    top: 150px;
-}
-
-#not_in_list, #not_enough_letters, #coming_soon, #disqualify {
+#not_in_list, #not_enough_letters, #coming_soon {
     opacity: 0;
     border-radius: var(--box-border-radius);
     background-color: var(--notification-bg);
@@ -623,7 +619,7 @@ h1 {
     transition: opacity 0.5s;
 }
 
-#not_in_list.reveal, #not_enough_letters.reveal, #coming_soon.reveal, #disqualify.reveal {
+#not_in_list.reveal, #not_enough_letters.reveal, #coming_soon.reveal {
     opacity: 1;
     transition: opacity 0.5s;
 }
@@ -1204,7 +1200,6 @@ h1 {
     text-align: center;
     cursor: pointer;
 }
-
 
 @media screen and (max-width: 768px) {
     body {
