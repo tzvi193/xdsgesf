@@ -37,7 +37,7 @@ let roundDisqualified = false;
 async function enableDailyMode() {
 
     document.getElementById("coming_soon").classList.add("reveal"); // Placeholder for future functionality
-    setTimeout(() => document.getElementById("coming_soon").classList.remove("reveal"),750)
+    setTimeout(() => document.getElementById("coming_soon").classList.remove("reveal"),750);
     /*
 
     if (dailyMode == false) {
@@ -169,6 +169,8 @@ function reveal() {
 function reveal_yes() {
     // Restore the reveal button and show the word for a moment
     renderRevealButton();
+    document.getElementById("disqualify").classList.add("reveal");
+    setTimeout(() => document.getElementById("disqualify").classList.remove("reveal"), 1500);
     const revealBtn = document.getElementById("reveal_word");
     if (revealBtn) {
         revealBtn.innerText = word_to_guess;
@@ -305,6 +307,8 @@ function hint() {
             gameStats.hintsUsed++;
             saveStats();
             roundDisqualified = true;
+            document.getElementById("disqualify").classList.add("reveal");
+            setTimeout(() => document.getElementById("disqualify").classList.remove("reveal"), 1500);
         }
     }
 
@@ -799,7 +803,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("daily_stats").style.backgroundColor = "var(--primary-color)";
         document.getElementById("random_stats").style.backgroundColor = "var(--bar-default-bg)";
     });
-    
+
     // Initialize the buttons
     document.getElementById("random_stats").style.backgroundColor = "var(--primary-color)";
     document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
