@@ -1203,10 +1203,9 @@ h1 {
 
 @media screen and (max-width: 768px) {
     body {
-        /* CHANGED: Use full viewport height and prevent scrolling */
-        height: 100vh; /* Fallback for older browsers */
-        height: 100dvh; /* Use dynamic viewport height */
-        overflow: hidden; /* Prevent body from scrolling */
+        height: 100vh;
+        height: 100dvh; 
+        overflow: hidden;
     }
 
     /* Top Bar adjustments */
