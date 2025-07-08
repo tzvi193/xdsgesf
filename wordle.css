@@ -607,6 +607,10 @@ h1 {
     width: 100%;
 }
 
+#disqualify_parent {
+    top: 150px;
+}
+
 #not_in_list, #not_enough_letters, #coming_soon, #disqualify {
     opacity: 0;
     border-radius: var(--box-border-radius);
