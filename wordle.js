@@ -807,8 +807,47 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize the buttons
     document.getElementById("random_stats").style.backgroundColor = "var(--primary-color)";
     document.getElementById("daily_stats").style.backgroundColor = "var(--bar-default-bg)";
+    // --- POPUP OVERLAY CLICK-TO-CLOSE LOGIC ---
+    // Settings
+    document.getElementById("settings_overlay").addEventListener("mousedown", function(e) {
+        if (e.target === this) {
+            document.getElementById("settings_box").classList.remove("showing");
+            this.classList.remove("active");
+        }
+    });
+    // Help/How to play
+    document.getElementById("overlay_help").addEventListener("mousedown", function(e) {
+        if (e.target === this) {
+            document.getElementById("how_to_play_box").classList.remove("showing");
+            this.classList.remove("active");
+        }
+    });
+    // Stats
+    document.getElementById("stats_overlay").addEventListener("mousedown", function(e) {
+        if (e.target === this) {
+            document.getElementById("stats_box").classList.remove("showing");
+            this.classList.remove("active");
+        }
+    });
+    // Win
+    var winOverlay = document.getElementById("overlay");
+    if (winOverlay) {
+        winOverlay.addEventListener("mousedown", function(e) {
+            if (e.target === this) {
+                document.getElementById("win_box_parent").classList.remove("won");
+            }
+        });
+    }
+    // Lose
+    var loseOverlay = document.getElementById("overlay_lose");
+    if (loseOverlay) {
+        loseOverlay.addEventListener("mousedown", function(e) {
+            if (e.target === this) {
+                document.getElementById("lose_box_parent").classList.remove("lost");
+            }
+        });
+    }
 });
-
 function setupThemeSwitcher() {
     document.querySelectorAll('.theme-option').forEach(option => {
         option.addEventListener('click', (e) => {
